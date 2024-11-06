@@ -158,3 +158,40 @@ W razie pytań lub problemów, utwórz issue w repozytorium lub skontaktuj się 
 
 ## Licencja
 [MIT](https://choosealicense.com/licenses/mit/)
+
+
+
+# Moje notatki>>>>>
+1.a  tworca repo 
+- otworz terminal 
+- cd  C:\Users\jendr\PycharmProjects 
+-(windows) New-Item -Path "C:\Users\jendr\PycharmProjects\" -Name "mini-projekt2" -ItemType Directory
+-(linux) mkdir -p mini-projekt2
+-wejscie do katalogu -> cd
+-inicjalizuje puste repo git 
+-sprawdzam status
+-otwarcie projekt w pycharm 
+-konfirguracja gita 
+-(za pierwszym razem)git config --global user.email "jedrzej.lukasik120@gmail.com"
+ git config --global user.name "Jedras777"
+-zacomitcowanie zmian 
+-git branch -M main
+-git remote add origin git@github.com:jedras777/mini-projekt2.git
+-git push -u origin main (sprawdz krok 2 w przypadku błędu autoryzacji)
+
+
+
+
+
+1.b repo na gicie wystarczy sklonowac
+- git clone git@github.com:jedras777/mini-projekt.git (skopiuj adres clone ssh)
+- sprawdz krok 2 w przypadku błędu autoryzacji
+	
+
+2.autoryzacja ssh 
+- otwarcie terminala 
+- ssh-keygen
+-zawsze tworz hasło 
+-w nowym terminalu wyswitlamy zawartosc pliku.pub (gc C:\Users\jendr/.ssh/id_ed25519.pub)
+-wklej klucz do github.com w ustawieniach swojego profilu 
+
