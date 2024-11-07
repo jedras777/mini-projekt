@@ -1,4 +1,6 @@
-from rot13_cipher import szyfrowanie_rot13, deszyfrowanie_rot13
+from mailbox import mboxMessage
+
+from src.ciphers.rot13_cipher import szyfrowanie_rot13, deszyfrowanie_rot13
 from src.ciphers.rot47_cypher import szyfrowanie_rot47, deszyfrowanie_rot47
 from src.history.history_memory import *
 from src.menu.console_menu import *
@@ -20,16 +22,20 @@ while True:
         wybor = menu.wybierz()
 
         if wybor == "1":
-            zdanie_zakodowane = menu.podaj_zdanie_do_zakodowania_dekodowania()
-            print(f"\n-------------------\n|kod : {szyfrowanie_rot13(zdanie_zakodowane)}|\n-------------------\n")
-            format_do_konwersji_json = (szyfrowanie_rot13(zdanie_zakodowane), algorytm_rot_13, historia.dodaj_czas())
+            zdanie = menu.podaj_zdanie_do_zakodowania_dekodowania()
+            zdanie_zakodowane = szyfrowanie_rot13(zdanie)
+            print(f"\n-------------------\n|kod : {zdanie_zakodowane}|\n-------------------\n")
+            format_do_konwersji_json = (zdanie_zakodowane, algorytm_rot_13, historia.dodaj_czas())
             historia.dodaj(json_maker(format_do_konwersji_json))
+            menu.dodaj_zdanie_do_pliku(zdanie_zakodowane)
 
         elif wybor == "2":
-            zdanie_zakodowane = menu.podaj_zdanie_do_zakodowania_dekodowania()
-            print(f"\n-------------------\n|kod : {szyfrowanie_rot47(zdanie_zakodowane)}|\n-------------------\n")
-            format_do_konwersji_json = (szyfrowanie_rot47(zdanie_zakodowane), algorytm_rot_47, historia.dodaj_czas())
+            zdanie = menu.podaj_zdanie_do_zakodowania_dekodowania()
+            zdanie_zakodowane = szyfrowanie_rot47(zdanie)
+            print(f"\n-------------------\n|kod : {zdanie_zakodowane}|\n-------------------\n")
+            format_do_konwersji_json = (zdanie_zakodowane, algorytm_rot_47, historia.dodaj_czas())
             historia.dodaj(json_maker(format_do_konwersji_json))
+            menu.dodaj_zdanie_do_pliku(zdanie_zakodowane)
 
     elif wybor == "2":
         print(menu.repr_szyfry())
@@ -37,23 +43,29 @@ while True:
 
         if wybor == "1":
             zdanie_zakodowane = menu.podaj_zdanie_do_zakodowania_dekodowania()
-            print(f"\n-------------------\n|kod : {deszyfrowanie_rot13(zdanie_zakodowane)}|\n-------------------\n")
-            format_do_konwersji_json = (deszyfrowanie_rot13(zdanie_zakodowane), algorytm_rot_13, historia.dodaj_czas())
+            zdanie_zdekodowane = deszyfrowanie_rot13(zdanie_zakodowane)
+            print(f"\n-------------------\n|kod : {zdanie_zdekodowane}|\n-------------------\n")
+            format_do_konwersji_json = (zdanie_zdekodowane, algorytm_rot_13, historia.dodaj_czas())
             historia.dodaj(json_maker(format_do_konwersji_json))
+            menu.dodaj_zdanie_do_pliku(zdanie_zdekodowane)
 
         elif wybor == "2":
             zdanie_zakodowane = menu.podaj_zdanie_do_zakodowania_dekodowania()
-            print(f"\n-------------------\n|kod : {deszyfrowanie_rot47(zdanie_zakodowane)}|\n-------------------\n")
-            format_do_konwersji_json = (deszyfrowanie_rot47(zdanie_zakodowane), algorytm_rot_47, historia.dodaj_czas())
+            zdanie_zdekodowane = deszyfrowanie_rot47(zdanie_zakodowane)
+            print(f"\n-------------------\n|kod : {zdanie_zdekodowane}|\n-------------------\n")
+            format_do_konwersji_json = (zdanie_zdekodowane, algorytm_rot_47, historia.dodaj_czas())
             historia.dodaj(json_maker(format_do_konwersji_json))
-
-    elif wybor == "4":
-        break
+            menu.dodaj_zdanie_do_pliku(zdanie_zdekodowane)
 
     elif wybor == "3":
         historia.pokaz_historie()
 
+    elif wybor == "4":
+        sciezka = r"C:\Users\jendr\Desktop\historia_mini_projektu.txt"
+        historia.zapisz_historie(sciezka)
+
     elif wybor == "5":
+        #sciezka do json C:\Users\jendr\Desktop\json_test.txt
         sciezka = menu.podaj_sciezke_do_pliku()
         plik = json_loader(sciezka)
         slownik_pliku = json_handler(plik)
@@ -71,10 +83,9 @@ while True:
             historia.dodaj(json_maker(format_do_konwersji_json))
         else:
             print("sprawdz czy wpisałes wszystko poprawnie")
-    elif wybor == "6":
-        sciezka = menu.podaj_sciezke_do_pliku()
-        historia.zapisz_historie(sciezka)
 
+    elif wybor == "6":
+        break
 
     else:
         print("zly wwybor!!!")

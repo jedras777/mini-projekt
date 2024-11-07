@@ -13,7 +13,7 @@ duze = string.ascii_uppercase
 
 slownik_malych = robimy_slowniki(male)
 slownik_duzych = robimy_slowniki(duze)
-lista_znakow = [".", " "] #uaktulanic liste znakow
+lista_znakow = [".", " ", "_", ","] #uaktulanic liste znakow
 
 #rot47 tworzenie slownikow
 
