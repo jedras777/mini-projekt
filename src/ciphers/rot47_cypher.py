@@ -1,6 +1,6 @@
 from src.ciphers.base_cypher import slownik_asciiiii, robimy_slowniki, lista_znakow
 
-def szyfrowanie_rot47(zdanie):
+def szyfrowanie_rot47(zdanie: str)-> str:
     slownik_zdania = robimy_slowniki(zdanie)
     kodder = []
     for indeks, litera in slownik_zdania.items():
@@ -14,7 +14,7 @@ def szyfrowanie_rot47(zdanie):
             kodder.append(litera)
     return "".join(kodder)
 
-def deszyfrowanie_rot47(zdanie):
+def deszyfrowanie_rot47(zdanie: str)-> str:
     slownik_zdania = robimy_slowniki(zdanie)
     kodder = []
     for indeks, litera in slownik_zdania.items():

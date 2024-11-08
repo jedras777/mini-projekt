@@ -15,24 +15,25 @@ class Menu:
         self.rot47_wubor = "2.rot47"
 
 
-    def __repr__(self):
+    def __repr__(self)-> str:
         return f"{self.opcja1}\n{self.opcja2}\n{self.opcja3}\n{self.opcja5}\n{self.opcja8}\n{self.opcja6}\n{self.opcja4}\n"
 
-    def repr_szyfry(self):
+    def repr_szyfry(self)-> str:
         return f"{self.rot13_wubor}\n{self.rot47_wubor}"
-    def wybierz(self):
+
+    def wybierz(self)-> str:
         wybor = input("wybierz akcje: ")
         return wybor
 
-    def podaj_zdanie_do_zakodowania_dekodowania(self):
+    def podaj_zdanie_do_zakodowania_dekodowania(self)-> str:
         zdanie_do_zakodowania = input("wpisz zdanie: ")
         return zdanie_do_zakodowania
 
-    def podaj_sciezke_do_pliku(self):
+    def podaj_sciezke_do_pliku(self)-> str:
         sciezka = input("podaj scieżke: ")
         return f'{sciezka}'
 
-    def dodaj_zdanie_do_pliku(self, zdanie):
+    def dodaj_zdanie_do_pliku(self, zdanie: str)-> None:
         sciezka = r"C:\Users\jendr\Desktop\plik_do_zapisywania_zdan.txt"
         with open(sciezka, "w", encoding="utf-8") as plik:
             plik.write(zdanie)

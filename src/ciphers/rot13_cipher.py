@@ -1,7 +1,7 @@
 
 from src.ciphers.base_cypher import robimy_slowniki, slownik_malych, slownik_duzych, lista_znakow
 
-def szyfrowanie_rot13(zdanie):
+def szyfrowanie_rot13(zdanie: str)-> str:
     slownik_zdania = robimy_slowniki(zdanie)
     zdanie_zakodowane = []
     for key, elem in slownik_zdania.items():
@@ -20,7 +20,7 @@ def szyfrowanie_rot13(zdanie):
             zdanie_zakodowane.append(elem)
     return "".join(zdanie_zakodowane)
 
-def deszyfrowanie_rot13(zdanie):
+def deszyfrowanie_rot13(zdanie: str)-> str:
     slownik_zdania = robimy_slowniki(zdanie)
     zdanie_zakodowane = []
     for key, elem in slownik_zdania.items():
