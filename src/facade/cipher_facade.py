@@ -1,4 +1,3 @@
-from mailbox import mboxMessage
 
 from src.ciphers.rot13_cipher import szyfrowanie_rot13, deszyfrowanie_rot13
 from src.ciphers.rot47_cypher import szyfrowanie_rot47, deszyfrowanie_rot47
