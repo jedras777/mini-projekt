@@ -1,5 +1,4 @@
 from datetime import datetime
-from symtable import Class
 from tkinter import *
 
 from src.ciphers.base_cypher import lista
@@ -7,7 +6,7 @@ from src.ciphers.rot13_cipher import szyfrowanie_rot13, deszyfrowanie_rot13
 from src.ciphers.rot47_cypher import szyfrowanie_rot47, deszyfrowanie_rot47
 from datetime import datetime
 
-def dodaj_do_historii(text: str, algorytm: str)-> None:
+def dodaj_do_historii(text, algorytm):
     czas = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     liczba = len(historia)
     if historia == {}:
@@ -17,7 +16,7 @@ def dodaj_do_historii(text: str, algorytm: str)-> None:
         liczba += 1
         historia[liczba] = f"'text': {text}, 'algorithm': {algorytm}, 'timestamp: {czas}"
 
-def change_frame(new_frame: Frame, old_frame: Frame):
+def change_frame(new_frame,old_frame):
     old_frame.forget()
     new_frame.pack()
 
