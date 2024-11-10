@@ -8,6 +8,7 @@ def json_loader(sciezka):
     with open(sciezka) as json_file:
         data = json.load(json_file)
     return data
+
 def json_handler(dict):
    text = dict["text"]
    algorithm = dict["algorithm"]
