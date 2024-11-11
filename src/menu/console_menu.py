@@ -20,6 +20,7 @@ class Menu:
 
     def repr_szyfry(self):
         return f"{self.rot13_wubor}\n{self.rot47_wubor}"
+
     def wybierz(self):
         wybor = input("wybierz akcje: ")
         return wybor
