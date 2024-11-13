@@ -88,3 +88,31 @@ while True:
 
     else:
         print("zly wwybor!!!")
+
+#notatki review
+from src.ciphers.rot13_cipher import ROT13Cipher
+
+class CipherFacade:
+    def __init__(self):
+
+
+
+        self.algorytm_rot_47 = "ROT47"
+        self.historia = History_Of_Coding_Decoding()
+        self.algorytm_rot_13 = ROT13Cipher()
+    def encrypt(self, tekst, algorytm):
+        if algorytm == "ROT13":
+            encrypted_tekst = self.algorytm_rot_13.encrypt(tekst)
+        elif algorytm == "ROT47":
+            pass #todo rot47
+        else:
+            pass #chce wywolac customowy blad
+            raise MojException("nie ma takiego szyfru")
+    def decrypt(self, tekst, algorytm):
+        if algorytm == "ROT13":
+            decrypted_tekst = self.algorytm_rot_13.decrypt(tekst)
+        elif algorytm == "ROT47":
+            pass #todo rot47
+        else:
+            pass #chce wywolac customowy blad
+            raise MojException("nie ma takiego szyfru")

@@ -34,3 +34,15 @@ def tworze_slownik_ascii(lista: list)-> dict:
 lista = tworze_liste_znakow_ascii()
 slownik_asciiiii = tworze_slownik_ascii(lista)
 
+#notatki review
+
+from abc import ABC, abstractmethod
+
+class BaseCipher(ABC):
+    @abstractmethod
+    def encrypt(self, text: str) -> str:
+        pass
+
+    @abstractmethod
+    def decrypt(self, text: str) -> str:
+        pass
