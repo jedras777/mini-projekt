@@ -4,24 +4,24 @@ import json
 historia = r"C:\Users\jendr\Desktop\historia_mini_projektu.txt"
 
 
-def json_loader(sciezka):
+def json_loader(sciezka: str)-> dict:
     with open(sciezka) as json_file:
         data = json.load(json_file)
     return data
-def json_handler(dict):
-   text = dict["text"]
-   algorithm = dict["algorithm"]
-   timestamp = dict["timestamp"]
+
+def json_handler(slownik: dict)-> tuple:
+   text = slownik["text"]
+   algorithm = slownik["algorithm"]
+   timestamp = slownik["timestamp"]
    return text, algorithm, timestamp
 
-def json_maker(tuple):
+def json_maker(krotka: tuple)-> dict:
     slownik = {}
-    slownik["text"] = tuple[0]
-    slownik["algorithm"] = tuple[1]
-    slownik["timestamp"] = tuple[2]
+    slownik["text"] = krotka[0]
+    slownik["algorithm"] = krotka[1]
+    slownik["timestamp"] = krotka[2]
     return slownik
 
 # elo = json_handler(plik)
 # elo1 = json_maker(elo)
 # elo = json_loader(plik)
-# print(elo)

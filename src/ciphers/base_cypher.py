@@ -1,7 +1,7 @@
 
 #rot13 tworzenie slownikow
 import string
-def robimy_slowniki(string):
+def robimy_slowniki(string: str)-> dict:
     slownik = {}
     for indeks, litera in enumerate(string, start=1):
         slownik[indeks] = litera
@@ -13,19 +13,19 @@ duze = string.ascii_uppercase
 
 slownik_malych = robimy_slowniki(male)
 slownik_duzych = robimy_slowniki(duze)
-lista_znakow = [".", " "] #uaktulanic liste znakow
+lista_znakow = [".", " ", "_", ","] #uaktulanic liste znakow
 
 #rot47 tworzenie slownikow
 
 
-def tworze_liste_znakow_ascii():
+def tworze_liste_znakow_ascii()-> list:
     ascii_list = []
     for i in range(33, 127):
         ascii_list.append(chr(i))
     return ascii_list
 
 
-def tworze_slownik_ascii(lista):
+def tworze_slownik_ascii(lista: list)-> dict:
     slownik_ascii = {}
     for indeks, litera in enumerate(lista, start=1):
         slownik_ascii[indeks] = litera
