@@ -8,6 +8,7 @@ def json_loader(sciezka: str)-> dict:
     with open(sciezka) as json_file:
         data = json.load(json_file)
     return data
+
 def json_handler(slownik: dict)-> tuple:
    text = slownik["text"]
    algorithm = slownik["algorithm"]
@@ -24,4 +25,3 @@ def json_maker(krotka: tuple)-> dict:
 # elo = json_handler(plik)
 # elo1 = json_maker(elo)
 # elo = json_loader(plik)
-

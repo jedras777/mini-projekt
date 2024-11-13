@@ -1,10 +1,15 @@
 from datetime import datetime
 from tkinter import *
+from tkinter import filedialog, messagebox
 
 from src.ciphers.base_cypher import lista
 from src.ciphers.rot13_cipher import szyfrowanie_rot13, deszyfrowanie_rot13
 from src.ciphers.rot47_cypher import szyfrowanie_rot47, deszyfrowanie_rot47
 from datetime import datetime
+
+import time
+from src.file_handlers.json_handler import json_handler,json_loader
+
 
 def dodaj_do_historii(text, algorytm):
     czas = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -67,6 +72,44 @@ def decipher47():
         label_derot47.configure(text=f"{ciphering}")
         dodaj_do_historii(ciphering, "ROT47")
 
+
+def zapis_histori_do_pliku():
+    scieska_historii = r"C:\Users\jendr\Desktop\historia_mini_projektu.txt"
+    with open(scieska_historii,"w") as plik:
+        for indeks, elem in historia.items():
+            plik.write(f"{indeks}=>{elem}\n")
+    plik.close()
+    zmien_tekst_przycisku4()
+
+
+def zmien_tekst_przycisku4():
+    if historia == {}:
+        btn_menu4.configure(text="historia jest pusta zakoduj cos")
+    else:
+        btn_menu4.configure(text="historia została zapisana pomyślnie")
+
+    window.after(3000, lambda: btn_menu4.config(text="Zapisz historie do pliku"))
+
+def open_file():
+    file_path = filedialog.askopenfilename(
+        title="Wybierz plik",
+        filetypes=(("Pliki tekstowe", "*.txt"), ("Wszystkie pliki", "*.*"))
+    )
+    if file_path:
+        messagebox.showinfo("Wybrano plik", f"Ścieżka do pliku: {file_path}")
+        plik = json_loader(file_path)
+        plik_handled = json_handler(plik)
+        if plik["algorithm"] == "ROT13":
+            label_file.configure(text=f"{deszyfrowanie_rot13(plik_handled[0])}")
+        elif plik["algorithm"] == "ROT47":
+            label_file.configure(text=f"{deszyfrowanie_rot47(plik_handled[0])}")
+
+    else:
+        messagebox.showwarning("Brak wyboru", "Nie wybrano żadnego pliku.")
+
+
+
+
 # def dodaj_his(historia):
 #     tekst = ""
 #     for i, x in historia.items():
@@ -94,17 +137,19 @@ window.geometry("500x500")
  #menu
 menu = Frame(window)
 menu.pack()
-btn1 = Button(menu, width=40, height=5, text="Zakoduj tekst", command=lambda: change_frame(menu_ciphering,menu))
-btn2 = Button(menu, width=40, height=5, text="Zdekoduj tekst",command=lambda: change_frame(menu_deciphering,menu))
-btn3 = Button(menu, width=40, height=5, text="Pokaz historie", command=lambda: change_frame(okno_historii, menu))
-btn4 = Button(menu, width=40, height=5, text="Zapisz historie do pliku")
-btn5 = Button(menu, width=40, height=5, text="Odkoduj tekst z pliku")
 
-btn1.pack()
-btn2.pack()
-btn3.pack()
-btn4.pack()
-btn5.pack()
+btn_menu1 = Button(menu, width=40, height=5, text="Zakoduj tekst", command=lambda: change_frame(menu_ciphering,menu))
+btn_menu2 = Button(menu, width=40, height=5, text="Zdekoduj tekst",command=lambda: change_frame(menu_deciphering,menu))
+btn_menu3 = Button(menu, width=40, height=5, text="Pokaz historie", command=lambda: change_frame(okno_historii, menu))
+btn_menu4 = Button(menu, width=40, height=5, text="Zapisz historie do pliku", command=lambda: zapis_histori_do_pliku())
+btn_menu5 = Button(menu, width=40, height=5, text="Odkoduj tekst z pliku", command=lambda: change_frame(menu_pliki,menu))
+
+
+btn_menu1.pack()
+btn_menu2.pack()
+btn_menu3.pack()
+btn_menu4.pack()
+btn_menu5.pack()
 
 #menu1
 menu_ciphering = Frame(window)
@@ -198,4 +243,19 @@ label_derot47.pack()
 btn3 = Button(menu_derot47, width=40, height=5, text="WSTECZ", command=lambda: change_frame(menu_deciphering,menu_derot47))
 btn3.pack()
 
+
+#menu odkodowania z pliku
+menu_pliki = Frame(window)
+button_file = Button(menu_pliki, width=40, height=20, text="wybierz plik", command=lambda: open_file())
+button_file.pack()
+label_file = Label(menu_pliki, width=40, height=20, text="zakodowana wiadomośc z pliku")
+label_file.pack()
+btn_file = Button(menu_pliki, width=40, height=5, text="WSTECZ", command=lambda: change_frame(menu,menu_pliki))
+btn_file.pack()
+
+
+
+
+
 window.mainloop()
+
