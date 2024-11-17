@@ -46,7 +46,7 @@ def deszyfrowanie_rot13(zdanie: str)-> str:
 
 
 #notatki review
-from .base_cypher import BaseCipher
+from src.ciphers.base_cypher import BaseCipher
 
 class ROT13Cipher(BaseCipher):
     def encrypt(self, text: str) -> str:
@@ -57,3 +57,4 @@ class ROT13Cipher(BaseCipher):
 
     def decrypt(self, text: str) -> str:
         return self.encrypt(text)  # ROT13 is symmetric
+

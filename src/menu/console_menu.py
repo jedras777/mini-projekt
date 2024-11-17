@@ -1,13 +1,12 @@
-from src.facade.cipher_facade import algorytm, CipherFacade
+from src.facade.cipher_facade import CipherFacade
+from src.file_handlers.json_handler import *
+from src.history.history_memory import History_Of_Coding_Decoding
 
 
 class Menu:
     def __init__(self):
-        self.opcja7 = ".zakoduj plik json" # zapytac czy tez to dodac
-
         self.fasade = CipherFacade()
-        self.rot13_wubor = "1.rot13"
-        self.rot47_wubor = "2.rot47"
+        self.history = History_Of_Coding_Decoding()
 
     def show_menu(self):
         menu_text = [
@@ -19,18 +18,74 @@ class Menu:
             "5.zdekoduj plik json",
             "6.zakoncz"
         ]
+
+        cipher_menu = [
+            "1.rot13",
+            "2.rot47"
+                       ]
+
+        algorytm_rot13 = "ROT13"
+        algorytm_rot47 = "ROT47"
+
         while True:
+
             print("\n".join(menu_text))
             wybor = self.wybierz()
             match wybor:
+
                 case "1":
-                    text = input("wpisz tekst:")
-                    algorytm = input("wybiierz ")
-                    encrypted = self.fasade.encrypt(text, algorytm)
+                    print("\n".join(cipher_menu))
+                    wybor_algo = self.wybierz()
+                    match wybor_algo:
+                        case "1":
+                            encrypted = self.fasade.encrypt(self.podaj_tekst(), algorytm_rot13)
+                            print(f"{encrypted}")
+                            format_do_zapisu = (encrypted, algorytm_rot13, self.history.dodaj_czas())
+                            self.history.dodaj(json_maker(format_do_zapisu))
+                            self.dodaj_zdanie_do_pliku(encrypted)
+                        case "2":
+                            encrypted = self.fasade.encrypt(self.podaj_tekst(), algorytm_rot47)
+                            print(f"{encrypted}")
+                            format_do_zapisu = (encrypted, algorytm_rot47, self.history.dodaj_czas())
+                            self.history.dodaj(json_maker(format_do_zapisu))
+                            self.dodaj_zdanie_do_pliku(encrypted)
+
+                case "2":
+                    print("\n".join(cipher_menu))
+                    wybor_algo = self.wybierz()
+                    match wybor_algo:
+                        case "1":
+                            encrypted = self.fasade.decrypt(self.podaj_tekst(), algorytm_rot13)
+                            print(f"{encrypted}")
+                            format_do_zapisu = (encrypted, algorytm_rot13, self.history.dodaj_czas())
+                            self.history.dodaj(json_maker(format_do_zapisu))
+                            self.dodaj_zdanie_do_pliku(encrypted)
+                        case "2":
+                            encrypted = self.fasade.decrypt(self.podaj_tekst(), algorytm_rot47)
+                            print(f"{encrypted}")
+                            format_do_zapisu = (encrypted,algorytm_rot47, self.history.dodaj_czas())
+                            self.history.dodaj(json_maker(format_do_zapisu))
+                            self.dodaj_zdanie_do_pliku(encrypted)
+
+                case "3":
+                    self.history.pokaz_historie()
+
+                case "4":
+                    sciezka = r"C:\Users\jendr\Desktop\historia_mini_projektu.txt"
+                    self.history.zapisz_historie(sciezka)
+                    print("historia została zapisana poprwanie")
+                case "5":
+                    self.odkoduj_z_pliku()
+                case "6":
+                    break
 
 
-    def repr_szyfry(self)-> str:
-        return f"{self.rot13_wubor}\n{self.rot47_wubor}"
+
+
+
+    def podaj_tekst(self):
+        tekst = input("podaj tekst: ")
+        return tekst
 
     def wybierz(self)-> str:
         wybor = input("wybierz akcje: ")
@@ -48,10 +103,33 @@ class Menu:
         sciezka = r"C:\Users\jendr\Desktop\plik_do_zapisywania_zdan.txt"
         with open(sciezka, "w", encoding="utf-8") as plik:
             plik.write(zdanie)
+    def odkoduj_z_pliku(self):
+        sciezka = r"C:\Users\jendr\Desktop\json_test.txt"
+        plik = json_loader(sciezka)
+        slownik_pliku = json_handler(plik)
+        zdanie_zakodowane = slownik_pliku[0]
+        algorytm = slownik_pliku[1]
+        timestamp = slownik_pliku[2]
+        ALGORYTM_ROT13 = "ROT13"
+        ALGORYTM_ROT47= "ROT47"
+        match algorytm:
+
+            case "ROT13":
+                encrypted = self.fasade.encrypt(zdanie_zakodowane, "ROT13")
+                print(f"\n-------------------\n|kod : {encrypted}|\n-------------------\n")
+                format_do_zapisu = (encrypted, "ROT13", timestamp)
+                self.history.dodaj(json_maker(format_do_zapisu))
+
+            case "ROT47":
+                encrypted = self.fasade.encrypt(zdanie_zakodowane, "ROT47")
+                print(f"\n-------------------\n|kod : {encrypted}|\n-------------------\n")
+                format_do_zapisu = (encrypted, "ROT47", timestamp)
+                self.history.dodaj(json_maker(format_do_zapisu))
 
 
 
-# menu = Menu()
+menu = Menu()
+menu.show_menu()
 # sciezka = menu.podaj_sciezke_do_pliku()
 # print(sciezka)
 
