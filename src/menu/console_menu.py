@@ -130,6 +130,8 @@ class Menu:
                 print(f"\n-------------------\n|kod : {encrypted}|\n-------------------\n")
                 format_do_zapisu = (encrypted, "ROT47", timestamp)
                 self.history.dodaj(json_maker(format_do_zapisu))
+            case _:
+                raise InvalidCipherTextError(algorytm)
 
 
 

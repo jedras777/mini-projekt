@@ -116,8 +116,8 @@ class CipherFacade:
         elif algorytm == "ROT47":
             decrypted_tekst = self.algorytm_rot_47.decrypt(tekst)
         else:
-            pass #chce wywolac customowy blad
-            raise MojException("nie ma takiego szyfru")
+            raise InvalidCipherTextError(algorytm)
+
         return decrypted_tekst
 
 elo = CipherFacade()
