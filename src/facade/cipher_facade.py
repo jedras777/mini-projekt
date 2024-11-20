@@ -91,6 +91,7 @@
 #notatki review
 from src.ciphers.rot13_cipher import ROT13Cipher
 from src.ciphers.rot47_cypher import ROT47Cipher
+from src.exceptions.cipher_exceptions import InvalidCipherTextError
 from src.history.history_memory import *
 
 class CipherFacade:
@@ -105,8 +106,8 @@ class CipherFacade:
         elif algorytm == "ROT47":
             encrypted_tekst = self.algorytm_rot_47.encrypt(tekst)
         else:
-            pass #chce wywolac customowy blad
-            raise MojException("nie ma takiego szyfru")
+            raise InvalidCipherTextError(algorytm)
+
         return encrypted_tekst
 
     def decrypt(self, tekst: str, algorytm: str)-> str:
@@ -118,3 +119,6 @@ class CipherFacade:
             pass #chce wywolac customowy blad
             raise MojException("nie ma takiego szyfru")
         return decrypted_tekst
+
+elo = CipherFacade()
+elo.encrypt("elo", "ROT13")

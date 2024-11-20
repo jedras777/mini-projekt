@@ -1,3 +1,4 @@
+from src.exceptions.cipher_exceptions import InvalidCipherTextError
 from src.facade.cipher_facade import CipherFacade
 from src.file_handlers.json_handler import *
 from src.history.history_memory import History_Of_Coding_Decoding
@@ -75,7 +76,11 @@ class Menu:
                     self.history.zapisz_historie(sciezka)
                     print("historia została zapisana poprwanie")
                 case "5":
-                    self.odkoduj_z_pliku()
+                    try:
+                        self.odkoduj_z_pliku()
+                    except InvalidCipherTextError as e:
+                        print(e)
+
                 case "6":
                     break
 
@@ -110,8 +115,8 @@ class Menu:
         zdanie_zakodowane = slownik_pliku[0]
         algorytm = slownik_pliku[1]
         timestamp = slownik_pliku[2]
-        ALGORYTM_ROT13 = "ROT13"
-        ALGORYTM_ROT47= "ROT47"
+        # ALGORYTM_ROT13 = "ROT13"
+        # ALGORYTM_ROT47= "ROT47"
         match algorytm:
 
             case "ROT13":
