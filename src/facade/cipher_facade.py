@@ -99,7 +99,7 @@ class CipherFacade:
         self.algorytm_rot_13 = ROT13Cipher()
         self.algorytm_rot_47 = ROT47Cipher()
 
-    def encrypt(self, tekst, algorytm):
+    def encrypt(self, tekst: str, algorytm: str)-> str:
         if algorytm == "ROT13":
             encrypted_tekst = self.algorytm_rot_13.encrypt(tekst)
         elif algorytm == "ROT47":
@@ -109,7 +109,7 @@ class CipherFacade:
             raise MojException("nie ma takiego szyfru")
         return encrypted_tekst
 
-    def decrypt(self, tekst, algorytm):
+    def decrypt(self, tekst: str, algorytm: str)-> str:
         if algorytm == "ROT13":
             decrypted_tekst = self.algorytm_rot_13.decrypt(tekst)
         elif algorytm == "ROT47":

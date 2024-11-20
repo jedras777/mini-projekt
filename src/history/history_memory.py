@@ -18,6 +18,7 @@ class History_Of_Coding_Decoding:
     def dodaj_czas(self)-> str:
         czas = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         return czas
+
     def dodaj(self, obiekt: object)-> None:
         liczba = len(self.history)
         if self.history == {}:
