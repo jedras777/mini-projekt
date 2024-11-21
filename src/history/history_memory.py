@@ -1,15 +1,16 @@
 from datetime import datetime
-from src.file_handlers.json_handler import *
-class Informacja:
-    def __init__(self, pliczek: dict):
-        self.pliczek = json_handler(pliczek)
-        self.text = self.pliczek[0]
-        self.algorithm = self.pliczek[1]
-        self.timestamp = self.pliczek[2]
-        # self.czas = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-    def __repr__(self)-> str:
-        return f"czas: {self.timestamp}, tresc: {self.text}, format: {self.algorithm}"
+# class Informacja:
+#
+#     def __init__(self, pliczek: dict):
+#         self.pliczek = json_handler(pliczek)
+#         self.text = self.pliczek[0]
+#         self.algorithm = self.pliczek[1]
+#         self.timestamp = self.pliczek[2]
+#         # self.czas = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    # def __repr__(self)-> str:
+    #     return f"czas: {self.timestamp}, tresc: {self.text}, format: {self.algorithm}"
 
 class History_Of_Coding_Decoding:
     def __init__(self):
