@@ -1,4 +1,6 @@
 import json
+import os
+from src.exceptions.cipher_exceptions import FileOperationError
 
 #plik = r"C:\Users\jendr\Desktop\json_test.txt"
 historia = r"C:\Users\jendr\Desktop\historia_mini_projektu.txt"
@@ -8,9 +10,13 @@ class Plik:
         pass
 
     def json_loader(self, sciezka: str)-> dict:
-        with open(sciezka) as json_file:
-            data = json.load(json_file)
-        return data
+        if sciezka or os.path.isfile(sciezka):
+            raise FileOperationError(sciezka)
+        else:
+            with open(sciezka) as json_file:
+                data = json.load(json_file)
+            return data
+
 
     def json_handler(self, slownik: dict)-> tuple:
        text = slownik["text"]

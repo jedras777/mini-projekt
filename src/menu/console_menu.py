@@ -1,4 +1,4 @@
-from src.exceptions.cipher_exceptions import InvalidCipherTextError
+from src.exceptions.cipher_exceptions import InvalidCipherTextError, FileOperationError, InvalidMenuChoice
 from src.facade.cipher_facade import CipherFacade
 from src.file_handlers.json_handler import *
 from src.history.history_memory import History_Of_Coding_Decoding
@@ -79,11 +79,14 @@ class Menu:
                 case "5":
                     try:
                         self.odkoduj_z_pliku()
-                    except InvalidCipherTextError as e:
+                    except (InvalidCipherTextError, FileOperationError) as e:
                         print(e)
 
                 case "6":
                     break
+
+                case _:
+                    raise InvalidMenuChoice(wybor)
 
 
 
@@ -110,30 +113,34 @@ class Menu:
         with open(sciezka, "w", encoding="utf-8") as plik:
             plik.write(zdanie)
     def odkoduj_z_pliku(self):
-        sciezka = r"C:\Users\jendr\Desktop\json_test.txt"
+        sciezka = r"C:\Users\jendr\Desktop\json_test.tt"
         plik = self.plik.json_loader(sciezka)
-        slownik_pliku = self.plik.json_handler(plik)
-        zdanie_zakodowane = slownik_pliku[0]
-        algorytm = slownik_pliku[1]
-        timestamp = slownik_pliku[2]
-        # ALGORYTM_ROT13 = "ROT13"
-        # ALGORYTM_ROT47= "ROT47"
-        match algorytm:
+        if plik:
+            slownik_pliku = self.plik.json_handler(plik)
+            zdanie_zakodowane = slownik_pliku[0]
+            algorytm = slownik_pliku[1]
+            timestamp = slownik_pliku[2]
+            # ALGORYTM_ROT13 = "ROT13"
+            # ALGORYTM_ROT47= "ROT47"
+            match algorytm:
 
-            case "ROT13":
-                encrypted = self.fasade.encrypt(zdanie_zakodowane, "ROT13")
-                print(f"\n-------------------\n|kod : {encrypted}|\n-------------------\n")
-                format_do_zapisu = (encrypted, "ROT13", timestamp)
-                self.history.dodaj(self.plik.json_maker(format_do_zapisu))
+                case "ROT13":
+                    encrypted = self.fasade.encrypt(zdanie_zakodowane, "ROT13")
+                    print(f"\n-------------------\n|kod : {encrypted}|\n-------------------\n")
+                    format_do_zapisu = (encrypted, "ROT13", timestamp)
+                    self.history.dodaj(self.plik.json_maker(format_do_zapisu))
 
-            case "ROT47":
-                encrypted = self.fasade.encrypt(zdanie_zakodowane, "ROT47")
-                print(f"\n-------------------\n|kod : {encrypted}|\n-------------------\n")
-                format_do_zapisu = (encrypted, "ROT47", timestamp)
+                case "ROT47":
+                    encrypted = self.fasade.encrypt(zdanie_zakodowane, "ROT47")
+                    print(f"\n-------------------\n|kod : {encrypted}|\n-------------------\n")
+                    format_do_zapisu = (encrypted, "ROT47", timestamp)
 
-                self.history.dodaj(self.plik.json_maker(format_do_zapisu))
-            case _:
-                raise InvalidCipherTextError(algorytm)
+                    self.history.dodaj(self.plik.json_maker(format_do_zapisu))
+
+                case _:
+                    raise InvalidCipherTextError(algorytm)
+        else:
+            raise FileOperationError(sciezka)
 
 
 
