@@ -38,7 +38,7 @@ class Window:
         frame_szyfru.pack()
         btn1 = self.przycisk(frame_szyfru, 500, 100, "ROT13", command=lambda: self.komenda("elo"))
         btn2 = self.przycisk(frame_szyfru, 500, 100, "ROT47")
-        btn3 = self.przycisk(frame_szyfru, 100, 100, "POWRÓT",command=lambda: self.change_frame(self.menu_glowne(), frame_szyfru))
+        btn3 = self.przycisk(frame_szyfru, 250, 100, "POWRÓT",command=lambda: self.change_frame(self.menu_glowne(), frame_szyfru))
         return frame_szyfru
 
 
