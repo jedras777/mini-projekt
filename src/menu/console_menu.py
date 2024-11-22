@@ -1,8 +1,10 @@
-from src.exceptions.cipher_exceptions import InvalidCipherTextError, FileOperationError, InvalidMenuChoice
+from dbm import error
+from src.tools.logger import logger
+from src.exceptions.cipher_exceptions import InvalidCipherTextError, FileOperationError, InvalidMenuChoice, FileNotExistError
 from src.facade.cipher_facade import CipherFacade
 from src.file_handlers.json_handler import *
 from src.history.history_memory import History_Of_Coding_Decoding
-
+from  src.settings.settings import Settings
 
 class Menu:
     def __init__(self):
@@ -40,17 +42,21 @@ class Menu:
                     wybor_algo = self.wybierz()
                     match wybor_algo:
                         case "1":
+
                             encrypted = self.fasade.encrypt(self.podaj_tekst(), algorytm_rot13)
-                            print(f"{encrypted}")
-                            format_do_zapisu = (encrypted, algorytm_rot13, self.history.dodaj_czas())
-                            self.history.dodaj(self.plik.json_maker(format_do_zapisu))
-                            self.dodaj_zdanie_do_pliku(encrypted)
+
+                            #po review
+                            #self.facade.encrypt()
                         case "2":
                             encrypted = self.fasade.encrypt(self.podaj_tekst(), algorytm_rot47)
                             print(f"{encrypted}")
                             format_do_zapisu = (encrypted, algorytm_rot47, self.history.dodaj_czas())
                             self.history.dodaj(self.plik.json_maker(format_do_zapisu))
                             self.dodaj_zdanie_do_pliku(encrypted)
+                        case _:
+                            error = InvalidMenuChoice(wybor)
+                            print(error)
+
 
                 case "2":
                     print("\n".join(cipher_menu))
@@ -68,6 +74,9 @@ class Menu:
                             format_do_zapisu = (encrypted,algorytm_rot47, self.history.dodaj_czas())
                             self.history.dodaj(self.plik.json_maker(format_do_zapisu))
                             self.dodaj_zdanie_do_pliku(encrypted)
+                        case _:
+                            error = InvalidMenuChoice(wybor)
+                            print(error)
 
                 case "3":
                     self.history.pokaz_historie()
@@ -77,16 +86,21 @@ class Menu:
                     self.history.zapisz_historie(sciezka)
                     print("historia została zapisana poprwanie")
                 case "5":
+
                     try:
+
                         self.odkoduj_z_pliku()
-                    except (InvalidCipherTextError, FileOperationError) as e:
-                        print(e)
+                    except (InvalidCipherTextError, FileOperationError, FileNotExistError) as e:
+                        logger.error(e)
+
+
 
                 case "6":
-                    break
+                    exit(0)
 
                 case _:
-                    raise InvalidMenuChoice(wybor)
+                    error = InvalidMenuChoice(wybor)
+                    logger.error(error)
 
 
 
@@ -108,39 +122,35 @@ class Menu:
         sciezka = input("podaj scieżke: ")
         return f'{sciezka}'
 
-    def dodaj_zdanie_do_pliku(self, zdanie: str)-> None:
-        sciezka = r"C:\Users\jendr\Desktop\plik_do_zapisywania_zdan.txt"
-        with open(sciezka, "w", encoding="utf-8") as plik:
-            plik.write(zdanie)
+
+# todo facade
     def odkoduj_z_pliku(self):
-        sciezka = r"C:\Users\jendr\Desktop\json_test.tt"
-        plik = self.plik.json_loader(sciezka)
-        if plik:
-            slownik_pliku = self.plik.json_handler(plik)
-            zdanie_zakodowane = slownik_pliku[0]
-            algorytm = slownik_pliku[1]
-            timestamp = slownik_pliku[2]
-            # ALGORYTM_ROT13 = "ROT13"
-            # ALGORYTM_ROT47= "ROT47"
-            match algorytm:
+        # sciezka = r"C:\Users\jendr\Desktop\json_test.txt"
 
-                case "ROT13":
-                    encrypted = self.fasade.encrypt(zdanie_zakodowane, "ROT13")
-                    print(f"\n-------------------\n|kod : {encrypted}|\n-------------------\n")
-                    format_do_zapisu = (encrypted, "ROT13", timestamp)
-                    self.history.dodaj(self.plik.json_maker(format_do_zapisu))
+        plik = self.plik.json_loader(Settings.decode_filepath)
+        slownik_pliku = self.plik.json_handler(plik)
+        zdanie_zakodowane = slownik_pliku[0]
+        algorytm = slownik_pliku[1]
+        timestamp = slownik_pliku[2]
 
-                case "ROT47":
-                    encrypted = self.fasade.encrypt(zdanie_zakodowane, "ROT47")
-                    print(f"\n-------------------\n|kod : {encrypted}|\n-------------------\n")
-                    format_do_zapisu = (encrypted, "ROT47", timestamp)
+        match algorytm:
 
-                    self.history.dodaj(self.plik.json_maker(format_do_zapisu))
+            case "ROT13":
+                encrypted = self.fasade.encrypt(zdanie_zakodowane, "ROT13")
+                print(f"\n-------------------\n|kod : {encrypted}|\n-------------------\n")
+                format_do_zapisu = (encrypted, "ROT13", timestamp)
+                self.history.dodaj(self.plik.json_maker(format_do_zapisu))
 
-                case _:
-                    raise InvalidCipherTextError(algorytm)
-        else:
-            raise FileOperationError(sciezka)
+            case "ROT47":
+                encrypted = self.fasade.encrypt(zdanie_zakodowane, "ROT47")
+                print(f"\n-------------------\n|kod : {encrypted}|\n-------------------\n")
+                format_do_zapisu = (encrypted, "ROT47", timestamp)
+
+                self.history.dodaj(self.plik.json_maker(format_do_zapisu))
+
+            case _:
+                raise InvalidCipherTextError(algorytm)
+
 
 
 

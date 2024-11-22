@@ -1,6 +1,7 @@
 import json
 import os
-from src.exceptions.cipher_exceptions import FileOperationError
+from src.tools.logger import logger
+from src.exceptions.cipher_exceptions import FileOperationError, FileNotExistError
 
 #plik = r"C:\Users\jendr\Desktop\json_test.txt"
 historia = r"C:\Users\jendr\Desktop\historia_mini_projektu.txt"
@@ -10,8 +11,11 @@ class Plik:
         pass
 
     def json_loader(self, sciezka: str)-> dict:
-        if sciezka or os.path.isfile(sciezka):
+        if not sciezka:
+            logger.debug("sprawdzam sciezke")
             raise FileOperationError(sciezka)
+        elif not os.path.isfile(sciezka):
+            raise FileNotExistError(sciezka)
         else:
             with open(sciezka) as json_file:
                 data = json.load(json_file)

@@ -93,12 +93,16 @@ from src.ciphers.rot13_cipher import ROT13Cipher
 from src.ciphers.rot47_cypher import ROT47Cipher
 from src.exceptions.cipher_exceptions import InvalidCipherTextError
 from src.history.history_memory import *
+from src.file_handlers.json_handler import Plik
+from src.settings.settings import Settings
+
 
 class CipherFacade:
     def __init__(self):
         self.historia = History_Of_Coding_Decoding()
         self.algorytm_rot_13 = ROT13Cipher()
         self.algorytm_rot_47 = ROT47Cipher()
+        self.plik = Plik()
 
     def encrypt(self, tekst: str, algorytm: str)-> str:
         if algorytm == "ROT13":
@@ -107,6 +111,10 @@ class CipherFacade:
             encrypted_tekst = self.algorytm_rot_47.encrypt(tekst)
         else:
             raise InvalidCipherTextError(algorytm)
+        print(f"{encrypted_tekst}")
+        format_do_zapisu = (encrypted_tekst, algorytm, self.historia.dodaj_czas())
+        self.historia.dodaj(self.plik.json_maker(format_do_zapisu))
+        self.dodaj_zdanie_do_pliku(encrypted_tekst)
 
         return encrypted_tekst
 
@@ -119,6 +127,11 @@ class CipherFacade:
             raise InvalidCipherTextError(algorytm)
 
         return decrypted_tekst
+
+    def dodaj_zdanie_do_pliku(self, zdanie: str)-> None:
+        sciezka = r"C:\Users\jendr\Desktop\plik_do_zapisywania_zdan.txt"
+        with open(Settings.save_path, "w", encoding="utf-8") as plik:
+            plik.write(zdanie)
 
 elo = CipherFacade()
 elo.encrypt("elo", "ROT13")

@@ -1,22 +1,20 @@
-"""InvalidCipherTextError
-- FileOperationError
-- InvalidMenuChoiceError
- """
 
-class InvalidCipherTextError(Exception):
-    def __init__(self, algorytm):
-        self.algorytm = algorytm
+class CustomBaseError(Exception):
+    message = f"Bazowy błąd:"
+    def __init__(self, param: str):
+        self.param = param
     def __str__(self):
-        return f"NIE ZNAM TAKIEGO ALGORYTMU ERROR:{self.algorytm}"
+        return f"{self.message} {self.param}"
 
-class FileOperationError(Exception):
-    def __init__(self, sciezka):
-        self.sciezka = sciezka
-    def __str__(self):
-        return f"NIE MA TAKIEJ SCIEZKI ERROR:{self.sciezka}"
 
-class InvalidMenuChoice(Exception):
-    def __init__(self, choice):
-        self.choice = choice
-    def __str__(self):
-        return f"NIE MA TAKIEJ SCIEZKI ERROR:{self.choice}"
+class InvalidCipherTextError(CustomBaseError):
+    message = "Nie ma takiego algorytmu"
+
+class FileOperationError(CustomBaseError):
+    message = "Niepoprawna ścieżka do pliku"
+
+class InvalidMenuChoice(CustomBaseError):
+    message = "Nie ma takiego wyboru"
+
+class FileNotExistError(CustomBaseError):
+    message = "Nie ma takiego pliku"
