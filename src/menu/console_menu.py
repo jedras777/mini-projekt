@@ -4,13 +4,14 @@ from src.exceptions.cipher_exceptions import InvalidCipherTextError, FileOperati
 from src.facade.cipher_facade import CipherFacade
 from src.file_handlers.json_handler import *
 from src.history.history_memory import History_Of_Coding_Decoding
-from  src.settings.settings import Settings
+from src.settings.settings import Settings
 
 class Menu:
     def __init__(self):
         self.fasade = CipherFacade()
         self.history = History_Of_Coding_Decoding()
         self.plik = Plik()
+
 
     def show_menu(self):
         menu_text = [
@@ -32,31 +33,20 @@ class Menu:
         algorytm_rot47 = "ROT47"
 
         while True:
-
             print("\n".join(menu_text))
             wybor = self.wybierz()
             match wybor:
-
                 case "1":
                     print("\n".join(cipher_menu))
                     wybor_algo = self.wybierz()
                     match wybor_algo:
                         case "1":
-
-                            encrypted = self.fasade.encrypt(self.podaj_tekst(), algorytm_rot13)
-
-                            #po review
-                            #self.facade.encrypt()
+                            self.fasade.encrypt(self.podaj_tekst(), algorytm_rot13)
                         case "2":
-                            encrypted = self.fasade.encrypt(self.podaj_tekst(), algorytm_rot47)
-                            print(f"{encrypted}")
-                            format_do_zapisu = (encrypted, algorytm_rot47, self.history.dodaj_czas())
-                            self.history.dodaj(self.plik.json_maker(format_do_zapisu))
-                            self.dodaj_zdanie_do_pliku(encrypted)
+                            self.fasade.encrypt(self.podaj_tekst(), algorytm_rot47)
                         case _:
                             error = InvalidMenuChoice(wybor)
                             print(error)
-
 
                 case "2":
                     print("\n".join(cipher_menu))
@@ -64,40 +54,26 @@ class Menu:
                     match wybor_algo:
                         case "1":
                             encrypted = self.fasade.decrypt(self.podaj_tekst(), algorytm_rot13)
-                            print(f"{encrypted}")
-                            format_do_zapisu = (encrypted, algorytm_rot13, self.history.dodaj_czas())
-                            self.history.dodaj(self.plik.json_maker(format_do_zapisu))
-                            self.dodaj_zdanie_do_pliku(encrypted)
                         case "2":
                             encrypted = self.fasade.decrypt(self.podaj_tekst(), algorytm_rot47)
-                            print(f"{encrypted}")
-                            format_do_zapisu = (encrypted,algorytm_rot47, self.history.dodaj_czas())
-                            self.history.dodaj(self.plik.json_maker(format_do_zapisu))
-                            self.dodaj_zdanie_do_pliku(encrypted)
                         case _:
                             error = InvalidMenuChoice(wybor)
                             print(error)
-
                 case "3":
-                    self.history.pokaz_historie()
+                    self.fasade.historia.pokaz_historie()
 
                 case "4":
-                    sciezka = r"C:\Users\jendr\Desktop\historia_mini_projektu.txt"
-                    self.history.zapisz_historie(sciezka)
+                    self.fasade.historia.zapisz_historie(Settings.save_history_path)
                     print("historia została zapisana poprwanie")
+
                 case "5":
-
                     try:
-
-                        self.odkoduj_z_pliku()
+                        self.fasade.odkoduj_z_pliku()
                     except (InvalidCipherTextError, FileOperationError, FileNotExistError) as e:
                         logger.error(e)
 
-
-
                 case "6":
                     exit(0)
-
                 case _:
                     error = InvalidMenuChoice(wybor)
                     logger.error(error)
@@ -114,50 +90,49 @@ class Menu:
         wybor = input("wybierz akcje: ")
         return wybor
 
-    def podaj_zdanie_do_zakodowania_dekodowania(self)-> str:
-        zdanie_do_zakodowania = input("wpisz zdanie: ")
-        return zdanie_do_zakodowania
-
-    def podaj_sciezke_do_pliku(self)-> str:
-        sciezka = input("podaj scieżke: ")
-        return f'{sciezka}'
-
-
-# todo facade
-    def odkoduj_z_pliku(self):
-        # sciezka = r"C:\Users\jendr\Desktop\json_test.txt"
-
-        plik = self.plik.json_loader(Settings.decode_filepath)
-        slownik_pliku = self.plik.json_handler(plik)
-        zdanie_zakodowane = slownik_pliku[0]
-        algorytm = slownik_pliku[1]
-        timestamp = slownik_pliku[2]
-
-        match algorytm:
-
-            case "ROT13":
-                encrypted = self.fasade.encrypt(zdanie_zakodowane, "ROT13")
-                print(f"\n-------------------\n|kod : {encrypted}|\n-------------------\n")
-                format_do_zapisu = (encrypted, "ROT13", timestamp)
-                self.history.dodaj(self.plik.json_maker(format_do_zapisu))
-
-            case "ROT47":
-                encrypted = self.fasade.encrypt(zdanie_zakodowane, "ROT47")
-                print(f"\n-------------------\n|kod : {encrypted}|\n-------------------\n")
-                format_do_zapisu = (encrypted, "ROT47", timestamp)
-
-                self.history.dodaj(self.plik.json_maker(format_do_zapisu))
-
-            case _:
-                raise InvalidCipherTextError(algorytm)
+#nie uzywane
+    # def podaj_zdanie_do_zakodowania_dekodowania(self)-> str:
+    #     zdanie_do_zakodowania = input("wpisz zdanie: ")
+    #     return zdanie_do_zakodowania
+    #
+    # def podaj_sciezke_do_pliku(self)-> str:
+    #     sciezka = input("podaj scieżke: ")
+    #     return f'{sciezka}'
 
 
+# # todo facade
+#     def odkoduj_z_pliku(self):
+#         # sciezka = r"C:\Users\jendr\Desktop\json_test.txt"
+#
+#         plik = self.plik.json_loader(Settings.decode_filepath)
+#         slownik_pliku = self.plik.json_handler(plik)
+#         zdanie_zakodowane = slownik_pliku[0]
+#         algorytm = slownik_pliku[1]
+#         timestamp = slownik_pliku[2]
+#
+#         match algorytm:
+#
+#             case "ROT13":
+#                 encrypted = self.fasade.encrypt(zdanie_zakodowane, "ROT13")
+#                 print(f"\n-------------------\n|kod : {encrypted}|\n-------------------\n")
+#                 format_do_zapisu = (encrypted, "ROT13", timestamp)
+#                 self.history.dodaj(self.plik.json_maker(format_do_zapisu))
+#
+#             case "ROT47":
+#                 encrypted = self.fasade.encrypt(zdanie_zakodowane, "ROT47")
+#                 print(f"\n-------------------\n|kod : {encrypted}|\n-------------------\n")
+#                 format_do_zapisu = (encrypted, "ROT47", timestamp)
+#
+#                 self.history.dodaj(self.plik.json_maker(format_do_zapisu))
+#
+#             case _:
+#                 raise InvalidCipherTextError(algorytm)
+#
+#
 
 
+elo = Menu()
+elo.show_menu()
 
-menu = Menu()
-menu.show_menu()
-# sciezka = menu.podaj_sciezke_do_pliku()
-# print(sciezka)
 
 

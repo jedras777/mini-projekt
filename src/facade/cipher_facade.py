@@ -125,13 +125,40 @@ class CipherFacade:
             decrypted_tekst = self.algorytm_rot_47.decrypt(tekst)
         else:
             raise InvalidCipherTextError(algorytm)
+        print(f"{decrypted_tekst}")
+        format_do_zapisu = (decrypted_tekst, algorytm, self.historia.dodaj_czas())
+        self.historia.dodaj(self.plik.json_maker(format_do_zapisu))
+        self.dodaj_zdanie_do_pliku(decrypted_tekst)
 
         return decrypted_tekst
 
     def dodaj_zdanie_do_pliku(self, zdanie: str)-> None:
-        sciezka = r"C:\Users\jendr\Desktop\plik_do_zapisywania_zdan.txt"
         with open(Settings.save_path, "w", encoding="utf-8") as plik:
             plik.write(zdanie)
+
+    def odkoduj_z_pliku(self):
+        plik = self.plik.json_loader(Settings.decode_filepath)
+        slownik_pliku = self.plik.json_handler(plik)
+        zdanie_zakodowane = slownik_pliku[0]
+        algorytm = slownik_pliku[1]
+        timestamp = slownik_pliku[2]
+
+        match algorytm:
+
+            case "ROT13":
+                encrypted = self.encrypt(zdanie_zakodowane, "ROT13")
+                print(f"\n-------------------\n|kod : {encrypted}|\n-------------------\n")
+                format_do_zapisu = (encrypted, "ROT13", timestamp)
+                self.historia.dodaj(self.plik.json_maker(format_do_zapisu))
+
+            case "ROT47":
+                encrypted = self.encrypt(zdanie_zakodowane, "ROT47")
+                print(f"\n-------------------\n|kod : {encrypted}|\n-------------------\n")
+                format_do_zapisu = (encrypted, "ROT47", timestamp)
+                self.historia.dodaj(self.plik.json_maker(format_do_zapisu))
+
+            case _:
+                raise InvalidCipherTextError(algorytm)
 
 elo = CipherFacade()
 elo.encrypt("elo", "ROT13")
