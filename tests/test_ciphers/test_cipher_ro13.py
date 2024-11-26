@@ -1,30 +1,32 @@
-from src.ciphers.rot13_cipher import szyfrowanie_rot13,deszyfrowanie_rot13
-
-def test_rot_13_ciphering():
-    zdanie = szyfrowanie_rot13("eloelo")
-    assert zdanie == "rybryb"
-
-def test_rot_13_ciphering_empty():
-    zdanie = szyfrowanie_rot13("")
-    assert zdanie == ""
-def test_rot_13_ciphering_whitespaces_and_spoecial_characters():
-    zdanie = szyfrowanie_rot13("    ,,,..._")
-    assert zdanie == "    ,,,..._"
-
-def test_rot_13_deciphering():
-    zdanie = deszyfrowanie_rot13("eloelo")
-    assert zdanie == "rybryb"
-
-def test_rot_13_deciphering_empty():
-    zdanie = deszyfrowanie_rot13("")
-    assert zdanie == ""
-def test_rot_13_deciphering_whitespaces_and_spoecial_characters():
-    zdanie = deszyfrowanie_rot13("    ,,,..._")
-    assert zdanie == "    ,,,..._"
+from src.ciphers.rot13_cipher import ROT13Cipher
 
 
-def test_rot13_symetry():
-    tekst = "eloelo"
-    zakodowane = szyfrowanie_rot13(tekst)
-    odkodowane = szyfrowanie_rot13(zakodowane)
-    assert tekst == odkodowane
+
+def test_encrypt_method():
+    klasa = ROT13Cipher()
+    assert klasa.encrypt("hello") == "uryyb"
+    assert klasa.encrypt("HELLO") == "URYYB"
+    assert klasa.encrypt("Python123") == "Clguba123"
+
+def test_decrypt_method():
+    klasa = ROT13Cipher()
+    assert klasa.decrypt("hello") == "uryyb"
+    assert klasa.decrypt("HELLO") == "URYYB"
+    assert klasa.decrypt("Python123") == "Clguba123"
+
+def test_symmetry():
+    klasa = ROT13Cipher()
+    decrypted = klasa.decrypt("elo")
+    encrypted = klasa.encrypt(decrypted)
+    assert encrypted == "elo"
+
+def test_empty_string():
+    klasa = ROT13Cipher()
+    assert klasa.encrypt("") == ""
+    assert klasa.decrypt("") == ""
+
+def test_non_alpha_characters():
+    cipher = ROT13Cipher()
+    text = r"1234!@#$%^&*()_+[]{};':\",./<>?"
+    assert cipher.encrypt(text) == text
+    assert cipher.decrypt(text) == text
