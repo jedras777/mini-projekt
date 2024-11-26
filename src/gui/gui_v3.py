@@ -1,4 +1,4 @@
-
+from datetime import datetime
 from tkinter import *
 from tkinter import filedialog, messagebox
 
@@ -6,8 +6,10 @@ from src.ciphers.base_cypher import lista
 from src.ciphers.rot13_cipher import szyfrowanie_rot13, deszyfrowanie_rot13
 from src.ciphers.rot47_cypher import szyfrowanie_rot47, deszyfrowanie_rot47
 from datetime import datetime
+
 import time
 from src.file_handlers.json_handler import json_handler,json_loader
+
 
 def dodaj_do_historii(text, algorytm):
     czas = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -70,6 +72,7 @@ def decipher47():
         label_derot47.configure(text=f"{ciphering}")
         dodaj_do_historii(ciphering, "ROT47")
 
+
 def zapis_histori_do_pliku():
     scieska_historii = r"C:\Users\jendr\Desktop\historia_mini_projektu.txt"
     with open(scieska_historii,"w") as plik:
@@ -106,6 +109,7 @@ def open_file():
 
 
 
+
 # def dodaj_his(historia):
 #     tekst = ""
 #     for i, x in historia.items():
@@ -122,7 +126,7 @@ historia = {}
 
 
 window = Tk()
-window.geometry("700x700")
+window.geometry("500x500")
 
 
 
@@ -132,8 +136,8 @@ window.geometry("700x700")
 
  #menu
 menu = Frame(window)
-
 menu.pack()
+
 btn_menu1 = Button(menu, width=40, height=5, text="Zakoduj tekst", command=lambda: change_frame(menu_ciphering,menu))
 btn_menu2 = Button(menu, width=40, height=5, text="Zdekoduj tekst",command=lambda: change_frame(menu_deciphering,menu))
 btn_menu3 = Button(menu, width=40, height=5, text="Pokaz historie", command=lambda: change_frame(okno_historii, menu))
@@ -239,6 +243,7 @@ label_derot47.pack()
 btn3 = Button(menu_derot47, width=40, height=5, text="WSTECZ", command=lambda: change_frame(menu_deciphering,menu_derot47))
 btn3.pack()
 
+
 #menu odkodowania z pliku
 menu_pliki = Frame(window)
 button_file = Button(menu_pliki, width=40, height=20, text="wybierz plik", command=lambda: open_file())
@@ -253,3 +258,4 @@ btn_file.pack()
 
 
 window.mainloop()
+
