@@ -3,8 +3,6 @@ import os
 from src.tools.logger import logger
 from src.exceptions.cipher_exceptions import FileOperationError, FileNotExistError
 
-#plik = r"C:\Users\jendr\Desktop\json_test.txt"
-historia = r"C:\Users\jendr\Desktop\historia_mini_projektu.txt"
 
 class Plik:
     def __init__(self):

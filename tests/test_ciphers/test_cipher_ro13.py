@@ -30,3 +30,24 @@ def test_non_alpha_characters():
     text = r"1234!@#$%^&*()_+[]{};':\",./<>?"
     assert cipher.encrypt(text) == text
     assert cipher.decrypt(text) == text
+
+def test_large_input():
+    klasa = ROT13Cipher()
+    text = "a" * 1000  # 1000 znaków 'a'
+    encrypted = klasa.encrypt(text)
+    decrypted = klasa.decrypt(encrypted)
+    assert decrypted == text
+
+def test_non_latin_characters():
+    klasa = ROT13Cipher()
+    text = "Zażółć gęślą jaźń"
+    encrypted = klasa.encrypt(text)
+    decrypted = klasa.decrypt(encrypted)
+    assert decrypted == text
+
+def test_encrypting_encrypted_text():
+    klasa = ROT13Cipher()
+    text = "Example Text"
+    encrypted_once = klasa.encrypt(text)
+    encrypted_twice = klasa.encrypt(encrypted_once)
+    assert encrypted_twice == text

@@ -24,3 +24,26 @@ def test_empty_string():
     klasa = ROT47Cipher()
     assert klasa.encrypt("") == ""
     assert klasa.decrypt("") == ""
+
+
+
+def test_large_input():
+    klasa = ROT47Cipher()
+    text = "a" * 1000  # 1000 znaków 'a'
+    encrypted = klasa.encrypt(text)
+    decrypted = klasa.decrypt(encrypted)
+    assert decrypted == text
+
+def test_non_latin_characters():
+    klasa = ROT47Cipher()
+    text = "Zażółć gęślą jaźń"
+    encrypted = klasa.encrypt(text)
+    decrypted = klasa.decrypt(encrypted)
+    assert decrypted == text
+
+def test_encrypting_encrypted_text():
+    klasa = ROT47Cipher()
+    text = "Example Text"
+    encrypted_once = klasa.encrypt(text)
+    encrypted_twice = klasa.encrypt(encrypted_once)
+    assert encrypted_twice == text
