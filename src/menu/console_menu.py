@@ -12,7 +12,6 @@ class Menu:
         self.history = History_Of_Coding_Decoding()
         self.plik = Plik()
 
-
     def show_menu(self):
         menu_text = [
             "--------Menu----------",
@@ -79,9 +78,6 @@ class Menu:
                     logger.error(error)
 
 
-
-
-
     def podaj_tekst(self):
         tekst = input("podaj tekst: ")
         return tekst
@@ -90,49 +86,11 @@ class Menu:
         wybor = input("wybierz akcje: ")
         return wybor
 
-#nie uzywane
-    # def podaj_zdanie_do_zakodowania_dekodowania(self)-> str:
-    #     zdanie_do_zakodowania = input("wpisz zdanie: ")
-    #     return zdanie_do_zakodowania
-    #
-    # def podaj_sciezke_do_pliku(self)-> str:
-    #     sciezka = input("podaj scieżke: ")
-    #     return f'{sciezka}'
 
 
-# # todo facade
-#     def odkoduj_z_pliku(self):
-#         # sciezka = r"C:\Users\jendr\Desktop\json_test.txt"
-#
-#         plik = self.plik.json_loader(Settings.decode_filepath)
-#         slownik_pliku = self.plik.json_handler(plik)
-#         zdanie_zakodowane = slownik_pliku[0]
-#         algorytm = slownik_pliku[1]
-#         timestamp = slownik_pliku[2]
-#
-#         match algorytm:
-#
-#             case "ROT13":
-#                 encrypted = self.fasade.encrypt(zdanie_zakodowane, "ROT13")
-#                 print(f"\n-------------------\n|kod : {encrypted}|\n-------------------\n")
-#                 format_do_zapisu = (encrypted, "ROT13", timestamp)
-#                 self.history.dodaj(self.plik.json_maker(format_do_zapisu))
-#
-#             case "ROT47":
-#                 encrypted = self.fasade.encrypt(zdanie_zakodowane, "ROT47")
-#                 print(f"\n-------------------\n|kod : {encrypted}|\n-------------------\n")
-#                 format_do_zapisu = (encrypted, "ROT47", timestamp)
-#
-#                 self.history.dodaj(self.plik.json_maker(format_do_zapisu))
-#
-#             case _:
-#                 raise InvalidCipherTextError(algorytm)
-#
-#
-
-
-elo = Menu()
-elo.show_menu()
+if __name__ == "__main__":
+    elo = Menu()
+    elo.show_menu()
 
 
 
