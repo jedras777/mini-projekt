@@ -33,6 +33,3 @@ class Plik:
         slownik["timestamp"] = krotka[2]
         return slownik
 
-# elo = json_handler(plik)
-# elo1 = json_maker(elo)
-# elo = json_loader(plik)

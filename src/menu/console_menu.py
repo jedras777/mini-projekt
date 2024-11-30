@@ -40,9 +40,12 @@ class Menu:
                     wybor_algo = self.wybierz()
                     match wybor_algo:
                         case "1":
-                            self.fasade.encrypt(self.podaj_tekst(), algorytm_rot13)
+
+                            encrypted = self.fasade.encrypt(self.podaj_tekst(), algorytm_rot13)
+                            print(encrypted)
                         case "2":
-                            self.fasade.encrypt(self.podaj_tekst(), algorytm_rot47)
+                            encrypted = self.fasade.encrypt(self.podaj_tekst(), algorytm_rot47)
+                            print(encrypted)
                         case _:
                             error = InvalidMenuChoice(wybor)
                             print(error)
@@ -52,9 +55,11 @@ class Menu:
                     wybor_algo = self.wybierz()
                     match wybor_algo:
                         case "1":
-                            encrypted = self.fasade.decrypt(self.podaj_tekst(), algorytm_rot13)
+                            decrypted = self.fasade.decrypt(self.podaj_tekst(), algorytm_rot13)
+                            print(decrypted)
                         case "2":
-                            encrypted = self.fasade.decrypt(self.podaj_tekst(), algorytm_rot47)
+                            decrypted = self.fasade.decrypt(self.podaj_tekst(), algorytm_rot47)
+                            print(decrypted)
                         case _:
                             error = InvalidMenuChoice(wybor)
                             print(error)
@@ -67,7 +72,8 @@ class Menu:
 
                 case "5":
                     try:
-                        self.fasade.odkoduj_z_pliku()
+                        encrypted = self.fasade.odkoduj_z_pliku()
+                        print(encrypted)
                     except (InvalidCipherTextError, FileOperationError, FileNotExistError) as e:
                         logger.error(e)
 
