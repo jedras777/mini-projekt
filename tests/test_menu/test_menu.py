@@ -27,7 +27,6 @@ def test_show_menu(mock_menu, capsys):
     with patch("builtins.input", return_value="6"):
         with pytest.raises(SystemExit):
             mock_menu.show_menu()
-            mock_menu.wybierz()
     captured = capsys.readouterr()
     assert captured.out == "\n".join(menu_text) + "\n"
 
