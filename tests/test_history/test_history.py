@@ -1,7 +1,6 @@
 
 import pytest
 from datetime import datetime
-from unittest.mock import patch
 from src.history.history_memory import History_Of_Coding_Decoding
 
 @pytest.fixture
@@ -48,10 +47,6 @@ def test_zapisz_historie(history_instance, tmp_path):
 def test_dodaj_czas(history_instance):
     """Test dodawania aktualnego czasu."""
     mock_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    with patch("datetime.datetime") as mock_datetime:
-        mock_datetime.now.return_value = datetime.strptime(mock_time, "%Y-%m-%d %H:%M:%S")
-        mock_datetime.strftime = datetime.strftime
+    result = history_instance.dodaj_czas()
 
-        result = history_instance.dodaj_czas()
-
-        assert result == mock_time
+    assert result == mock_time

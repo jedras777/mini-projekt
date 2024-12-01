@@ -1,17 +1,5 @@
 from datetime import datetime
 
-# class Informacja:
-#
-#     def __init__(self, pliczek: dict):
-#         self.pliczek = json_handler(pliczek)
-#         self.text = self.pliczek[0]
-#         self.algorithm = self.pliczek[1]
-#         self.timestamp = self.pliczek[2]
-#         # self.czas = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-
-    # def __repr__(self)-> str:
-    #     return f"czas: {self.timestamp}, tresc: {self.text}, format: {self.algorithm}"
-
 class History_Of_Coding_Decoding:
     def __init__(self):
         self.history = {}
@@ -30,8 +18,11 @@ class History_Of_Coding_Decoding:
             self.history[liczba] = obiekt
 
     def pokaz_historie(self):
-        for x, i in self.history.items():
-            print(f"{x}=> {i}")
+        if not self.history:
+            print("historia jest pusta")
+        else:
+            for x, i in self.history.items():
+                print(f"{x}=> {i}")
 
     def zapisz_historie(self, sciezka: str)-> None:
         with open(sciezka, "w", encoding="utf-8") as plik:
@@ -39,9 +30,4 @@ class History_Of_Coding_Decoding:
                 plik.write((str(x) + "=>" + str(i) + "\n"))
         plik.close()
 
-
-
-# elo = Informacja(plik)
-# historia.dodaj(elo)
-# historia.pokaz_historie()
 

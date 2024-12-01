@@ -9,8 +9,7 @@ from src.settings.settings import Settings
 class Menu:
     def __init__(self):
         self.fasade = CipherFacade()
-        self.history = History_Of_Coding_Decoding()
-        self.plik = Plik()
+
 
     def show_menu(self):
         menu_text = [
@@ -47,7 +46,7 @@ class Menu:
                             encrypted = self.fasade.encrypt(self.podaj_tekst(), algorytm_rot47)
                             print(encrypted)
                         case _:
-                            error = InvalidMenuChoice(wybor)
+                            error = InvalidMenuChoice(wybor_algo)
                             print(error)
 
                 case "2":
@@ -61,11 +60,10 @@ class Menu:
                             decrypted = self.fasade.decrypt(self.podaj_tekst(), algorytm_rot47)
                             print(decrypted)
                         case _:
-                            error = InvalidMenuChoice(wybor)
+                            error = InvalidMenuChoice(wybor_algo)
                             print(error)
                 case "3":
                     self.fasade.historia.pokaz_historie()
-
                 case "4":
                     self.fasade.historia.zapisz_historie(Settings.save_history_path)
                     print("historia została zapisana poprwanie")

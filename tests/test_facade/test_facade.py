@@ -1,4 +1,5 @@
 
+
 import pytest
 from src.exceptions.cipher_exceptions import InvalidCipherTextError
 from src.facade.cipher_facade import CipherFacade
@@ -36,4 +37,6 @@ def test_add_to_file():
 
 
 
-
+def test_odkoduj_z_pliku():
+    klasa = CipherFacade()
+    assert klasa.odkoduj_z_pliku() == "mnfmlsebjnal_grxfg"
