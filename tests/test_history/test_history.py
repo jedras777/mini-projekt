@@ -1,6 +1,8 @@
 
-import pytest
 from datetime import datetime
+
+import pytest
+
 from src.history.history_memory import History_Of_Coding_Decoding
 
 @pytest.fixture

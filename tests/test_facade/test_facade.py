@@ -1,6 +1,7 @@
 
 
 import pytest
+
 from src.exceptions.cipher_exceptions import InvalidCipherTextError
 from src.facade.cipher_facade import CipherFacade
 from src.settings.settings import Settings

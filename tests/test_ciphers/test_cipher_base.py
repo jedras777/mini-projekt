@@ -1,4 +1,5 @@
 import pytest
+
 from src.ciphers.base_cypher import BaseCipher
 
 class Test(BaseCipher):

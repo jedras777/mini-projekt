@@ -1,17 +1,21 @@
-from dbm import error
-from src.tools.logger import logger
-from src.exceptions.cipher_exceptions import InvalidCipherTextError, FileOperationError, InvalidMenuChoice, FileNotExistError
+from src.exceptions.cipher_exceptions import (
+    FileNotExistError,
+    FileOperationError,
+    InvalidCipherTextError,
+    InvalidMenuChoice,
+)
 from src.facade.cipher_facade import CipherFacade
 from src.file_handlers.json_handler import *
-from src.history.history_memory import History_Of_Coding_Decoding
 from src.settings.settings import Settings
+from src.tools.logger import logger
+
 
 class Menu:
-    def __init__(self):
+    def __init__(self)-> None:
         self.fasade = CipherFacade()
 
 
-    def show_menu(self):
+    def show_menu(self)-> None:
         menu_text = [
             "--------Menu----------",
             "1.zakoduj zdanie wpisane przez siebie",
@@ -40,10 +44,12 @@ class Menu:
                     match wybor_algo:
                         case "1":
 
-                            encrypted = self.fasade.encrypt(self.podaj_tekst(), algorytm_rot13)
+                            encrypted = self.fasade.encrypt(self.podaj_tekst(),
+                                                            algorytm_rot13)
                             print(encrypted)
                         case "2":
-                            encrypted = self.fasade.encrypt(self.podaj_tekst(), algorytm_rot47)
+                            encrypted = self.fasade.encrypt(self.podaj_tekst(),
+                                                            algorytm_rot47)
                             print(encrypted)
                         case _:
                             error = InvalidMenuChoice(wybor_algo)
@@ -54,10 +60,12 @@ class Menu:
                     wybor_algo = self.wybierz()
                     match wybor_algo:
                         case "1":
-                            decrypted = self.fasade.decrypt(self.podaj_tekst(), algorytm_rot13)
+                            decrypted = self.fasade.decrypt(self.podaj_tekst(),
+                                                            algorytm_rot13)
                             print(decrypted)
                         case "2":
-                            decrypted = self.fasade.decrypt(self.podaj_tekst(), algorytm_rot47)
+                            decrypted = self.fasade.decrypt(self.podaj_tekst(),
+                                                            algorytm_rot47)
                             print(decrypted)
                         case _:
                             error = InvalidMenuChoice(wybor_algo)
@@ -72,7 +80,8 @@ class Menu:
                     try:
                         encrypted = self.fasade.odkoduj_z_pliku()
                         print(encrypted)
-                    except (InvalidCipherTextError, FileOperationError, FileNotExistError) as e:
+                    except (InvalidCipherTextError, FileOperationError,
+                            FileNotExistError) as e:
                         logger.error(e)
 
                 case "6":
@@ -82,7 +91,7 @@ class Menu:
                     logger.error(error)
 
 
-    def podaj_tekst(self):
+    def podaj_tekst(self)-> str:
         tekst = input("podaj tekst: ")
         return tekst
 

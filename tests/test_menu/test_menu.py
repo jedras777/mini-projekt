@@ -1,5 +1,7 @@
 from unittest.mock import patch
+
 import pytest
+
 from src.menu.console_menu import Menu
 
 menu_text = [

@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from pathlib import Path
+
 ROOTPATH = Path(__file__).parent.parent
 TESTPATH = Path(__file__).parent.parent.parent
 

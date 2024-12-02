@@ -1,7 +1,8 @@
 import pytest
+
+from src.exceptions.cipher_exceptions import FileNotExistError, FileOperationError
 from src.file_handlers.json_handler import Plik
 from src.settings.settings import Settings
-from src.exceptions.cipher_exceptions import FileNotExistError, FileOperationError
 
 sample_json = {
   "text": "zaszyfrowany_tekst",
