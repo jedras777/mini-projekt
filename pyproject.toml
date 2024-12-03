@@ -2,10 +2,12 @@
 # Select the rules for code formatting, imports, and type hints
 select = ["E", "W", "F401", "I", "ANN"]
 
-# Optional: Exclude specific files or directories
-exclude = ["tests/", "src/gui/"]
+fixable = ["I"]
 
-ignore = ["ANN101", "E501", "E999", "ANN001", "ANN201"]
+# Optional: Exclude specific files or directories
+exclude = ["src/gui/"]
+
+ignore = ["ANN101", "E501",  "ANN201", "E999"]
 
 # Set the maximum line length (if formatting requires it)
 line-length = 88

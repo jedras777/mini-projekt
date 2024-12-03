@@ -111,15 +111,14 @@ class CipherFacade:
 
         match algorytm:
             case "ROT13":
-                encrypted = self.encrypt(zdanie_zakodowane, "ROT13")
-                format_do_zapisu = (encrypted, "ROT13", timestamp)
+                encrypted = self.algorytm_rot_13.decrypt(zdanie_zakodowane)
+                format_do_zapisu = (encrypted, algorytm, timestamp)
                 self.historia.dodaj(self.plik.json_maker(format_do_zapisu))
                 return encrypted
 
             case "ROT47":
-                encrypted = self.encrypt(zdanie_zakodowane, "ROT47")
-
-                format_do_zapisu = (encrypted, "ROT47", timestamp)
+                encrypted = self.algorytm_rot_47.decrypt(zdanie_zakodowane)
+                format_do_zapisu = (encrypted, algorytm, timestamp)
                 self.historia.dodaj(self.plik.json_maker(format_do_zapisu))
                 return encrypted
 

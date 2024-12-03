@@ -12,10 +12,23 @@ from src.tools.logger import logger
 
 class Menu:
     def __init__(self)-> None:
+        """
+        A menu-driven interface for cipher operations.
+
+        Attributes:
+        fasade (CipherFacade): Facade for managing cipher operations.
+        """
         self.fasade = CipherFacade()
 
 
     def show_menu(self)-> None:
+        """
+        Displays the main menu and handles user interactions.
+
+        This method provides a loop-based menu system for various cipher operations
+        including encryption, decryption, history management, and file operations.
+        """
+
         menu_text = [
             "--------Menu----------",
             "1.zakoduj zdanie wpisane przez siebie",
@@ -92,10 +105,22 @@ class Menu:
 
 
     def podaj_tekst(self)-> str:
+        """
+        Prompts user to input text.
+
+        Returns:
+            str: Text input by the user.
+        """
         tekst = input("podaj tekst: ")
         return tekst
 
     def wybierz(self)-> str:
+        """
+        Prompts user to select an action.
+
+        Returns:
+            str: User's selected action.
+        """
         wybor = input("wybierz akcje: ")
         return wybor
 
