@@ -1,14 +1,9 @@
 from datetime import datetime
-from tkinter import *
-from tkinter import filedialog, messagebox
+from tkinter import *, filedialog, messagebox
 
-from src.ciphers.base_cypher import lista
-from src.ciphers.rot13_cipher import szyfrowanie_rot13, deszyfrowanie_rot13
-from src.ciphers.rot47_cypher import szyfrowanie_rot47, deszyfrowanie_rot47
-from datetime import datetime
-
-import time
-from src.file_handlers.json_handler import json_handler,json_loader
+from src.ciphers.rot13_cipher import deszyfrowanie_rot13, szyfrowanie_rot13
+from src.ciphers.rot47_cypher import deszyfrowanie_rot47, szyfrowanie_rot47
+from src.file_handlers.json_handler import json_handler, json_loader
 
 
 def dodaj_do_historii(text, algorytm):

@@ -1,8 +1,10 @@
 
+from datetime import datetime
+
+from customtkinter import *
+
 from src.ciphers.rot13_cipher import *
 from src.ciphers.rot47_cipher import *
-from customtkinter import *
-from datetime import datetime
 
 app = CTk()
 app.geometry("800x800")
