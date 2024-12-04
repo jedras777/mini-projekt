@@ -84,7 +84,8 @@ class Menu:
                             error = InvalidMenuChoice(wybor_algo)
                             print(error)
                 case "3":
-                    self.fasade.historia.pokaz_historie()
+                    historia = self.fasade.historia.pokaz_historie()
+                    print(historia)
                 case "4":
                     self.fasade.historia.zapisz_historie(Settings.save_history_path)
                     print("historia została zapisana poprwanie")

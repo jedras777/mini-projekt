@@ -41,7 +41,7 @@ class HistoryOfCodingDecoding:
             liczba += 1
             self.history[liczba] = obiekt
 
-    def pokaz_historie(self)-> None:
+    def pokaz_historie(self)-> str:
         """
         Displays the entire operation history.
 
@@ -49,10 +49,12 @@ class HistoryOfCodingDecoding:
             Optional[str]: Formatted history string or None if empty.
         """
         if not self.history:
-            print("historia jest pusta")
+            return "historia jest pusta"
         else:
+            tekst = ""
             for x, i in self.history.items():
-                print(f"{x}=> {i}")
+                tekst += f"{x}=> {i}\n"
+            return tekst
 
     def zapisz_historie(self, sciezka: str)-> None:
         """

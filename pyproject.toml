@@ -1,11 +1,11 @@
 [tool.ruff]
 # Select the rules for code formatting, imports, and type hints
-select = ["E", "W", "F401", "I", "ANN"]
+select = ["E", "W", "F401", "I"]
 
 fixable = ["I"]
 
 # Optional: Exclude specific files or directories
-exclude = ["src/gui/"]
+exclude = ["gui/"]
 
 ignore = ["ANN101", "E501",  "ANN201", "E999"]
 
@@ -15,4 +15,5 @@ line-length = 88
 # Configure per-file ignores (e.g., ignore unused imports in `main.py`)
 [tool.ruff.per-file-ignores]
 "main.py" = ["F401"]
+"gui_v4" = ["I001", "ANN204", "ANN001"]
 

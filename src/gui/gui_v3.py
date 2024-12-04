@@ -1,5 +1,4 @@
 from datetime import datetime
-from tkinter import *, filedialog, messagebox
 
 from src.ciphers.rot13_cipher import deszyfrowanie_rot13, szyfrowanie_rot13
 from src.ciphers.rot47_cypher import deszyfrowanie_rot47, szyfrowanie_rot47
