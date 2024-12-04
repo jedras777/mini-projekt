@@ -56,16 +56,20 @@ class HistoryOfCodingDecoding:
                 tekst += f"{x}=> {i}\n"
             return tekst
 
-    def zapisz_historie(self, sciezka: str)-> None:
+    def zapisz_historie(self, sciezka: str)-> str:
         """
         Writes the history to a file.
 
         Args:
             sciezka (str): File path to save history.
         """
-        with open(sciezka, "w", encoding="utf-8") as plik:
-            for x, i in self.history.items():
-                plik.write((str(x) + "=>" + str(i) + "\n"))
-        plik.close()
+        if not self.history:
+            return "historia jest pusta zakoduj cos"
+        else:
+            with open(sciezka, "w", encoding="utf-8") as plik:
+                for x, i in self.history.items():
+                    plik.write((str(x) + "=>" + str(i) + "\n"))
+            plik.close()
+            return "historia została zapisana poprawnie"
 
 

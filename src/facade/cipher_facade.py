@@ -93,7 +93,7 @@ class CipherFacade:
         with open(Settings.save_path, "w", encoding="utf-8") as plik:
             plik.write(zdanie)
 
-    def odkoduj_z_pliku(self)-> str:
+    def odkoduj_z_pliku(self, file_path=Settings.decode_filepath)-> str:
         """
         Decodes text from a JSON file using the stored algorithm.
 
@@ -103,7 +103,7 @@ class CipherFacade:
         Raises:
             InvalidCipherTextError: If an unsupported cipher algorithm is specified.
         """
-        plik = self.plik.json_loader(Settings.decode_filepath)
+        plik = self.plik.json_loader(file_path)
         slownik_pliku = self.plik.json_handler(plik)
         zdanie_zakodowane = slownik_pliku[0]
         algorytm = slownik_pliku[1]

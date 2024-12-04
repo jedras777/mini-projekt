@@ -5,7 +5,7 @@ select = ["E", "W", "F401", "I"]
 fixable = ["I"]
 
 # Optional: Exclude specific files or directories
-exclude = ["gui/"]
+exclude = []
 
 ignore = ["ANN101", "E501",  "ANN201", "E999"]
 
