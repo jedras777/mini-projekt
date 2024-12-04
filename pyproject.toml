@@ -15,5 +15,5 @@ line-length = 88
 # Configure per-file ignores (e.g., ignore unused imports in `main.py`)
 [tool.ruff.per-file-ignores]
 "main.py" = ["F401"]
-"gui_v4" = []
+
 
