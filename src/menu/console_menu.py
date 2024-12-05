@@ -1,45 +1,134 @@
+from src.exceptions.cipher_exceptions import (
+    FileNotExistError,
+    FileOperationError,
+    InvalidCipherTextError,
+    InvalidMenuChoice,
+)
+from src.facade.cipher_facade import CipherFacade
+from src.file_handlers.json_handler import *
+from src.settings.settings import Settings
+from src.tools.logger import logger
+
+
 class Menu:
-    def __init__(self):
-        self.opcja1 = "--------Menu----------"
-        self.opcja2 = "1.zakoduj zdanie wpisane przez siebie"
-        self.opcja3 = "2.zdekoduj zdanie wpisane przez siebie"
-        self.opcja5 = "3.pokaz historie"
-        self.opcja8 = "4.zapisz historię do pliku"
-        self.opcja6 = "5.zdekoduj plik json"
-        self.opcja4 = "6.zakoncz"
+    def __init__(self)-> None:
+        """
+        A menu-driven interface for cipher operations.
 
-        self.opcja7 = ".zakoduj plik json" # zapytac czy tez to dodac
+        Attributes:
+        fasade (CipherFacade): Facade for managing cipher operations.
+        """
+        self.fasade = CipherFacade()
 
 
-        self.rot13_wubor = "1.rot13"
-        self.rot47_wubor = "2.rot47"
+    def show_menu(self)-> None:
+        """
+        Displays the main menu and handles user interactions.
+
+        This method provides a loop-based menu system for various cipher operations
+        including encryption, decryption, history management, and file operations.
+        """
+
+        menu_text = [
+            "--------Menu----------",
+            "1.zakoduj zdanie wpisane przez siebie",
+            "2.zdekoduj zdanie wpisane przez siebie",
+            "3.pokaz historie",
+            "4.zapisz historię do pliku",
+            "5.zdekoduj plik json",
+            "6.zakoncz"
+        ]
+
+        cipher_menu = [
+            "1.rot13",
+            "2.rot47"
+                       ]
+
+        algorytm_rot13 = "ROT13"
+        algorytm_rot47 = "ROT47"
+
+        while True:
+            print("\n".join(menu_text))
+            wybor = self.wybierz()
+            match wybor:
+                case "1":
+                    print("\n".join(cipher_menu))
+                    wybor_algo = self.wybierz()
+                    match wybor_algo:
+                        case "1":
+
+                            encrypted = self.fasade.encrypt(self.podaj_tekst(),
+                                                            algorytm_rot13)
+                            print(encrypted)
+                        case "2":
+                            encrypted = self.fasade.encrypt(self.podaj_tekst(),
+                                                            algorytm_rot47)
+                            print(encrypted)
+                        case _:
+                            error = InvalidMenuChoice(wybor_algo)
+                            print(error)
+
+                case "2":
+                    print("\n".join(cipher_menu))
+                    wybor_algo = self.wybierz()
+                    match wybor_algo:
+                        case "1":
+                            decrypted = self.fasade.decrypt(self.podaj_tekst(),
+                                                            algorytm_rot13)
+                            print(decrypted)
+                        case "2":
+                            decrypted = self.fasade.decrypt(self.podaj_tekst(),
+                                                            algorytm_rot47)
+                            print(decrypted)
+                        case _:
+                            error = InvalidMenuChoice(wybor_algo)
+                            print(error)
+                case "3":
+                    self.fasade.historia.pokaz_historie()
+                case "4":
+                    self.fasade.historia.zapisz_historie(Settings.save_history_path)
+                    print("historia została zapisana poprwanie")
+
+                case "5":
+                    try:
+                        encrypted = self.fasade.odkoduj_z_pliku()
+                        print(encrypted)
+                    except (InvalidCipherTextError, FileOperationError,
+                            FileNotExistError) as e:
+                        logger.error(e)
+
+                case "6":
+                    exit(0)
+                case _:
+                    error = InvalidMenuChoice(wybor)
+                    logger.error(error)
 
 
-    def __repr__(self)-> str:
-        return f"{self.opcja1}\n{self.opcja2}\n{self.opcja3}\n{self.opcja5}\n{self.opcja8}\n{self.opcja6}\n{self.opcja4}\n"
+    def podaj_tekst(self)-> str:
+        """
+        Prompts user to input text.
 
-    def repr_szyfry(self)-> str:
-        return f"{self.rot13_wubor}\n{self.rot47_wubor}"
+        Returns:
+            str: Text input by the user.
+        """
+        tekst = input("podaj tekst: ")
+        return tekst
 
     def wybierz(self)-> str:
+        """
+        Prompts user to select an action.
+
+        Returns:
+            str: User's selected action.
+        """
         wybor = input("wybierz akcje: ")
         return wybor
 
-    def podaj_zdanie_do_zakodowania_dekodowania(self)-> str:
-        zdanie_do_zakodowania = input("wpisz zdanie: ")
-        return zdanie_do_zakodowania
 
-    def podaj_sciezke_do_pliku(self)-> str:
-        sciezka = input("podaj scieżke: ")
-        return f'{sciezka}'
 
-    def dodaj_zdanie_do_pliku(self, zdanie: str)-> None:
-        sciezka = r"C:\Users\jendr\Desktop\plik_do_zapisywania_zdan.txt"
-        with open(sciezka, "w", encoding="utf-8") as plik:
-            plik.write(zdanie)
+if __name__ == "__main__":
+    elo = Menu()
+    elo.show_menu()
 
-# menu = Menu()
-# sciezka = menu.podaj_sciezke_do_pliku()
-# print(sciezka)
 
 
