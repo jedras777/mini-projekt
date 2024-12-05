@@ -1,4 +1,3 @@
-
 class CustomBaseError(Exception):
     """
     Base class for custom exceptions with parameterized error messages.
@@ -9,7 +8,9 @@ class CustomBaseError(Exception):
          message (str): Default error message template.
          param (str): Additional error context parameter.
     """
+
     message = f"Bazowy błąd:"
+
     def __init__(self, param: str) -> None:
         """
         Initialize custom error with specific parameter.
@@ -19,7 +20,7 @@ class CustomBaseError(Exception):
         """
         self.param = param
 
-    def __str__(self)-> str:
+    def __str__(self) -> str:
         """
         Generate formatted error message.
 
@@ -36,7 +37,9 @@ class InvalidCipherTextError(CustomBaseError):
     Inherits from CustomBaseError with a specific error message for
     cipher-related issues.
     """
+
     message = "Nie ma takiego algorytmu"
+
 
 class FileOperationError(CustomBaseError):
     """
@@ -44,7 +47,9 @@ class FileOperationError(CustomBaseError):
 
     Indicates issues with file paths or file system interactions.
     """
+
     message = "Niepoprawna ścieżka do pliku"
+
 
 class InvalidMenuChoice(CustomBaseError):
     """
@@ -52,7 +57,9 @@ class InvalidMenuChoice(CustomBaseError):
 
     Signals that a user has made an unsupported menu choice.
     """
+
     message = "Nie ma takiego wyboru"
+
 
 class FileNotExistError(CustomBaseError):
     """
@@ -60,4 +67,5 @@ class FileNotExistError(CustomBaseError):
 
     Provides clear indication of file unavailability.
     """
+
     message = "Nie ma takiego pliku"

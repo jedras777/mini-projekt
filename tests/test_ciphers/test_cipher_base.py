@@ -10,8 +10,8 @@ class Test(BaseCipher):
     Inherits from BaseCipher and provides minimal encrypt/decrypt methods
     that return the input text unchanged.
     """
-    def encrypt(self, text: str) -> str:
 
+    def encrypt(self, text: str) -> str:
         """
         Encrypt method that returns input text unchanged.
 
@@ -22,6 +22,7 @@ class Test(BaseCipher):
             str: Unmodified input text.
         """
         return text
+
     def decrypt(self, text: str) -> str:
         """
         Decrypt method that returns input text unchanged.
@@ -34,12 +35,14 @@ class Test(BaseCipher):
         """
         return text
 
+
 def test_encrypt():
     """
     Test encrypt method of Test cipher class.
     """
     klasa = Test()
     assert klasa.encrypt("elo") == "elo"
+
 
 def test_decrypt():
     """
@@ -48,6 +51,7 @@ def test_decrypt():
     klasa = Test()
     assert klasa.decrypt("elo") == "elo"
 
+
 def test_abstract_method():
     """
     Test that BaseCipher cannot be instantiated directly.
@@ -55,7 +59,8 @@ def test_abstract_method():
     with pytest.raises(TypeError):
         _ = BaseCipher()
 
-#pytanie na zajęcia jak przetestowac pass
+
+# pytanie na zajęcia jak przetestowac pass
 # class ConcreteClass(BaseCipher):
 #     def encrypt(self, text: str)-> str:
 #         return text + text
@@ -66,4 +71,3 @@ def test_abstract_method():
 # def test_elo():
 #     obj = ConcreteClass().encrypt("elo")
 #     assert obj == "eloelo"
-

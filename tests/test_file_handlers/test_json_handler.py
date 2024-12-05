@@ -1,13 +1,13 @@
 import pytest
 
-from src.exceptions.cipher_exceptions import FileNotExistError, FileOperationError
-from src.file_handlers.json_handler import Plik
+# from src.exceptions.cipher_exceptions import FileNotExistError, FileOperationError
+from src.file_handlers.json_handler import FileNotExistError, FileOperationError, Plik
 from src.settings.settings import Settings
 
 sample_json = {
-  "text": "zaszyfrowany_tekst",
-  "algorithm": "ROT13",
-  "timestamp": "2024-10-25 14:30:00"
+    "text": "zaszyfrowany_tekst",
+    "algorithm": "ROT13",
+    "timestamp": "2024-10-25 14:30:00",
 }
 
 
@@ -39,7 +39,10 @@ def test_json_maker():
     data_tuple = ("zaszyfrowany_tekst", "ROT13", "2024-10-25 14:30:00")
     expected_dict = sample_json
     created_dict = klasa.json_maker(data_tuple)
-    assert created_dict == expected_dict, f"Expected {expected_dict}, but got {created_dict}"
+    assert (
+        created_dict == expected_dict
+    ), f"Expected {expected_dict}, but got {created_dict}"
+
 
 def test_json_loader_empty_path():
     """
@@ -48,6 +51,7 @@ def test_json_loader_empty_path():
     klasa = Plik()
     with pytest.raises(FileOperationError):
         klasa.json_loader("")
+
 
 def test_json_loader_with_no_data_loaded():
     """
@@ -64,10 +68,7 @@ def test_json_handler_with_no_data_handled():
     """
     klasa = Plik()
     pusty_slownik = {}
-    invalid_slownik = {
-    "text": "zaszyfrowany_tekst",
-    "timestamp": "2024-10-25 14:30:00"
-    }
+    invalid_slownik = {"text": "zaszyfrowany_tekst", "timestamp": "2024-10-25 14:30:00"}
     with pytest.raises(KeyError):
         klasa.json_handler(pusty_slownik)
         klasa.json_handler(invalid_slownik)
@@ -83,4 +84,3 @@ def test_json_maker_with_no_data_provided():
     with pytest.raises(IndexError):
         klasa.json_maker(krotka)
         klasa.json_maker(incomplete_krotka)
-

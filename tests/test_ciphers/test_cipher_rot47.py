@@ -10,6 +10,7 @@ def test_encrypt_method():
     assert klasa.encrypt("ELL") == "t{{"
     assert klasa.encrypt("Python123") == "!JE9@?`ab"
 
+
 def test_decrypt_method():
     """
     Test ROT47 decrypt method with various input scenarios.
@@ -18,6 +19,7 @@ def test_decrypt_method():
     assert klasa.decrypt("hello") == "96==@"
     assert klasa.decrypt("HELLO") == "wt{{~"
     assert klasa.decrypt("Python123") == "!JE9@?`ab"
+
 
 def test_symmetry():
     """
@@ -28,6 +30,7 @@ def test_symmetry():
     encrypted = klasa.encrypt(decrypted)
     assert encrypted == "elo"
 
+
 def test_empty_string():
     """
     Test ROT47 behavior with empty string input.
@@ -35,7 +38,6 @@ def test_empty_string():
     klasa = ROT47Cipher()
     assert klasa.encrypt("") == ""
     assert klasa.decrypt("") == ""
-
 
 
 def test_large_input():
@@ -48,6 +50,7 @@ def test_large_input():
     decrypted = klasa.decrypt(encrypted)
     assert decrypted == text
 
+
 def test_non_latin_characters():
     """
     Test ROT47 with Polish characters.
@@ -57,6 +60,7 @@ def test_non_latin_characters():
     encrypted = klasa.encrypt(text)
     decrypted = klasa.decrypt(encrypted)
     assert decrypted == text
+
 
 def test_encrypting_encrypted_text():
     """

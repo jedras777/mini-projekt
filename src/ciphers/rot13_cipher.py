@@ -1,15 +1,15 @@
-
-from src.ciphers.base_cypher import BaseCipher
+from .base_cypher import BaseCipher
 
 
 class ROT13Cipher(BaseCipher):
     """
-     Implements the ROT13 substitution cipher algorithm.
+    Implements the ROT13 substitution cipher algorithm.
 
-     ROT13 is a simple letter substitution cipher that replaces a letter
-     with the 13th letter after it in the alphabet. Due to its symmetrical
-     nature, encryption and decryption are the same operation.
-     """
+    ROT13 is a simple letter substitution cipher that replaces a letter
+    with the 13th letter after it in the alphabet. Due to its symmetrical
+    nature, encryption and decryption are the same operation.
+    """
+
     def encrypt(self, text: str) -> str:
         """
         Encrypts the input text using ROT13 substitution.
@@ -20,10 +20,12 @@ class ROT13Cipher(BaseCipher):
         Returns:
             str: The encrypted text.
         """
-        return text.translate(str.maketrans(
-            "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
-            "NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm"
-        ))
+        return text.translate(
+            str.maketrans(
+                "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
+                "NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm",
+            )
+        )
 
     def decrypt(self, text: str) -> str:
         """
@@ -38,4 +40,3 @@ class ROT13Cipher(BaseCipher):
             str: The decrypted text.
         """
         return self.encrypt(text)  # ROT13 is symmetric
-
