@@ -1,8 +1,8 @@
 import json
 import os
 
-from src.exceptions.cipher_exceptions import FileNotExistError, FileOperationError
-from src.tools.logger import logger
+from exceptions.cipher_exceptions import FileNotExistError, FileOperationError
+from tools.logger import logger
 
 
 class Plik:
@@ -12,10 +12,11 @@ class Plik:
     Provides methods for loading, parsing, and creating JSON files
     with cipher-related information.
     """
-    def __init__(self)-> None:
+
+    def __init__(self) -> None:
         pass
 
-    def json_loader(self, sciezka: str)-> dict:
+    def json_loader(self, sciezka: str) -> dict:
         """
         Loads JSON data from a specified file path.
 
@@ -39,8 +40,7 @@ class Plik:
                 data = json.load(json_file)
             return data
 
-
-    def json_handler(self, slownik: dict)-> tuple:
+    def json_handler(self, slownik: dict) -> tuple:
         """
         Extracts key information from JSON dictionary.
 
@@ -55,7 +55,7 @@ class Plik:
         timestamp = slownik["timestamp"]
         return text, algorithm, timestamp
 
-    def json_maker(self, krotka: tuple)-> dict:
+    def json_maker(self, krotka: tuple) -> dict:
         """
         Creates a JSON-compatible dictionary from input tuple.
 
@@ -70,4 +70,3 @@ class Plik:
         slownik["algorithm"] = krotka[1]
         slownik["timestamp"] = krotka[2]
         return slownik
-

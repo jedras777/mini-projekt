@@ -10,13 +10,14 @@ class HistoryOfCodingDecoding:
     Attributes:
         history (Dict[int, Any]): Dictionary storing operation records.
     """
-    def __init__(self)-> None:
+
+    def __init__(self) -> None:
         """
         Initializes an empty history dictionary.
         """
         self.history = {}
 
-    def dodaj_czas(self)-> str:
+    def dodaj_czas(self) -> str:
         """
         Generates a formatted timestamp.
 
@@ -26,7 +27,7 @@ class HistoryOfCodingDecoding:
         czas = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         return czas
 
-    def dodaj(self, obiekt: object)-> None:
+    def dodaj(self, obiekt: object) -> None:
         """
         Adds a new operation record to the history.
 
@@ -41,7 +42,7 @@ class HistoryOfCodingDecoding:
             liczba += 1
             self.history[liczba] = obiekt
 
-    def pokaz_historie(self)-> None:
+    def pokaz_historie(self) -> None:
         """
         Displays the entire operation history.
 
@@ -54,7 +55,7 @@ class HistoryOfCodingDecoding:
             for x, i in self.history.items():
                 print(f"{x}=> {i}")
 
-    def zapisz_historie(self, sciezka: str)-> None:
+    def zapisz_historie(self, sciezka: str) -> None:
         """
         Writes the history to a file.
 
@@ -65,5 +66,3 @@ class HistoryOfCodingDecoding:
             for x, i in self.history.items():
                 plik.write((str(x) + "=>" + str(i) + "\n"))
         plik.close()
-
-

@@ -12,15 +12,13 @@ menu_text = [
     "3.pokaz historie",
     "4.zapisz historię do pliku",
     "5.zdekoduj plik json",
-    "6.zakoncz"
+    "6.zakoncz",
 ]
 
-cipher_menu = [
-    "1.rot13",
-    "2.rot47"
-]
+cipher_menu = ["1.rot13", "2.rot47"]
 algorytm_rot13 = "ROT13"
 algorytm_rot47 = "ROT47"
+
 
 @pytest.fixture
 def mock_menu():
@@ -31,6 +29,7 @@ def mock_menu():
         Menu: A new Menu instance for each test.
     """
     return Menu()
+
 
 def test_show_menu(mock_menu: Menu, capsys: CaptureFixture):
     """
@@ -45,6 +44,7 @@ def test_show_menu(mock_menu: Menu, capsys: CaptureFixture):
     captured = capsys.readouterr()
     assert captured.out == "\n".join(menu_text) + "\n"
 
+
 def test_wybor_1_1(mock_menu: Menu, capsys: CaptureFixture):
     """
     Test ROT13 encoding functionality.
@@ -58,11 +58,19 @@ def test_wybor_1_1(mock_menu: Menu, capsys: CaptureFixture):
         mock_menu (Menu): The Menu instance to test
         capsys (CaptureFixture): Pytest capture fixture for stdout
     """
-    wybory = ["1","1","elo","6"]
+    wybory = ["1", "1", "elo", "6"]
     with patch("builtins.input", side_effect=wybory):
         with pytest.raises(SystemExit):
             mock_menu.show_menu()
-    expected_output = "\n".join(menu_text)+"\n" +"\n".join(cipher_menu) +"\n" + 'ryb\n' + "\n".join(menu_text) + "\n"
+    expected_output = (
+        "\n".join(menu_text)
+        + "\n"
+        + "\n".join(cipher_menu)
+        + "\n"
+        + "ryb\n"
+        + "\n".join(menu_text)
+        + "\n"
+    )
     captured = capsys.readouterr()
     assert captured.out == expected_output
 
@@ -80,13 +88,22 @@ def test_wybor_1_2(mock_menu: Menu, capsys: CaptureFixture):
         mock_menu (Menu): The Menu instance to test
         capsys (CaptureFixture): Pytest capture fixture for stdout
     """
-    wybory = ["1","2","elo","6"]
+    wybory = ["1", "2", "elo", "6"]
     with patch("builtins.input", side_effect=wybory):
         with pytest.raises(SystemExit):
             mock_menu.show_menu()
-    expected_output = "\n".join(menu_text)+"\n" +"\n".join(cipher_menu) +"\n" + '6=@\n' + "\n".join(menu_text) + "\n"
+    expected_output = (
+        "\n".join(menu_text)
+        + "\n"
+        + "\n".join(cipher_menu)
+        + "\n"
+        + "6=@\n"
+        + "\n".join(menu_text)
+        + "\n"
+    )
     captured = capsys.readouterr()
     assert captured.out == expected_output
+
 
 def test_wybor_1_wrong_number(mock_menu: Menu, capsys: CaptureFixture):
     """
@@ -105,7 +122,15 @@ def test_wybor_1_wrong_number(mock_menu: Menu, capsys: CaptureFixture):
     with patch("builtins.input", side_effect=wybory):
         with pytest.raises(SystemExit):
             mock_menu.show_menu()
-    expected_output = "\n".join(menu_text)+"\n" +"\n".join(cipher_menu) +"\n" + 'Nie ma takiego wyboru 8\n' + "\n".join(menu_text) + "\n"
+    expected_output = (
+        "\n".join(menu_text)
+        + "\n"
+        + "\n".join(cipher_menu)
+        + "\n"
+        + "Nie ma takiego wyboru 8\n"
+        + "\n".join(menu_text)
+        + "\n"
+    )
     captured = capsys.readouterr()
     assert captured.out == expected_output
 
@@ -123,11 +148,19 @@ def test_wybor_2_1(mock_menu: Menu, capsys: CaptureFixture):
         mock_menu (Menu): The Menu instance to test
         capsys (CaptureFixture): Pytest capture fixture for stdout
     """
-    wybory = ["2","1","elo","6"]
+    wybory = ["2", "1", "elo", "6"]
     with patch("builtins.input", side_effect=wybory):
         with pytest.raises(SystemExit):
             mock_menu.show_menu()
-    expected_output = "\n".join(menu_text)+"\n" +"\n".join(cipher_menu) +"\n" + 'ryb\n' + "\n".join(menu_text) + "\n"
+    expected_output = (
+        "\n".join(menu_text)
+        + "\n"
+        + "\n".join(cipher_menu)
+        + "\n"
+        + "ryb\n"
+        + "\n".join(menu_text)
+        + "\n"
+    )
     captured = capsys.readouterr()
     assert captured.out == expected_output
 
@@ -145,13 +178,22 @@ def test_wybor_2_2(mock_menu: Menu, capsys: CaptureFixture):
         mock_menu (Menu): The Menu instance to test
         capsys (CaptureFixture): Pytest capture fixture for stdout
     """
-    wybory = ["2","2","elo","6"]
+    wybory = ["2", "2", "elo", "6"]
     with patch("builtins.input", side_effect=wybory):
         with pytest.raises(SystemExit):
             mock_menu.show_menu()
-    expected_output = "\n".join(menu_text)+"\n" +"\n".join(cipher_menu) +"\n" + '6=@\n' + "\n".join(menu_text) + "\n"
+    expected_output = (
+        "\n".join(menu_text)
+        + "\n"
+        + "\n".join(cipher_menu)
+        + "\n"
+        + "6=@\n"
+        + "\n".join(menu_text)
+        + "\n"
+    )
     captured = capsys.readouterr()
     assert captured.out == expected_output
+
 
 def test_wybor_2_wrong_number(mock_menu: Menu, capsys: CaptureFixture):
     """
@@ -170,7 +212,15 @@ def test_wybor_2_wrong_number(mock_menu: Menu, capsys: CaptureFixture):
     with patch("builtins.input", side_effect=wybory):
         with pytest.raises(SystemExit):
             mock_menu.show_menu()
-    expected_output = "\n".join(menu_text)+"\n" +"\n".join(cipher_menu) +"\n" + 'Nie ma takiego wyboru 8\n' + "\n".join(menu_text) + "\n"
+    expected_output = (
+        "\n".join(menu_text)
+        + "\n"
+        + "\n".join(cipher_menu)
+        + "\n"
+        + "Nie ma takiego wyboru 8\n"
+        + "\n".join(menu_text)
+        + "\n"
+    )
     captured = capsys.readouterr()
     assert captured.out == expected_output
 
@@ -192,6 +242,12 @@ def test_wybor_3(mock_menu: Menu, capsys: CaptureFixture):
     with patch("builtins.input", side_effect=wybory):
         with pytest.raises(SystemExit):
             mock_menu.show_menu()
-    expected_output = "\n".join(menu_text)+"\n" + 'historia jest pusta\n' + "\n".join(menu_text) + "\n"
+    expected_output = (
+        "\n".join(menu_text)
+        + "\n"
+        + "historia jest pusta\n"
+        + "\n".join(menu_text)
+        + "\n"
+    )
     captured = capsys.readouterr()
     assert captured.out == expected_output

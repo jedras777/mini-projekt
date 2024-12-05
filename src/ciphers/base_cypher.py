@@ -2,7 +2,6 @@ from abc import ABC, abstractmethod
 
 
 class BaseCipher(ABC):
-
     """
     Abstract base class defining the interface for cipher algorithms.
 
@@ -12,6 +11,7 @@ class BaseCipher(ABC):
     Attributes:
     None
     """
+
     @abstractmethod
     def encrypt(self, text: str) -> str:
         """

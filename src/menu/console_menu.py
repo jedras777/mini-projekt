@@ -1,17 +1,17 @@
-from src.exceptions.cipher_exceptions import (
+from exceptions.cipher_exceptions import (
     FileNotExistError,
     FileOperationError,
     InvalidCipherTextError,
     InvalidMenuChoice,
 )
-from src.facade.cipher_facade import CipherFacade
-from src.file_handlers.json_handler import *
-from src.settings.settings import Settings
-from src.tools.logger import logger
+from facade.cipher_facade import CipherFacade
+from file_handlers.json_handler import *
+from settings.settings import Settings
+from tools.logger import logger
 
 
 class Menu:
-    def __init__(self)-> None:
+    def __init__(self) -> None:
         """
         A menu-driven interface for cipher operations.
 
@@ -20,8 +20,7 @@ class Menu:
         """
         self.fasade = CipherFacade()
 
-
-    def show_menu(self)-> None:
+    def show_menu(self) -> None:
         """
         Displays the main menu and handles user interactions.
 
@@ -36,13 +35,10 @@ class Menu:
             "3.pokaz historie",
             "4.zapisz historię do pliku",
             "5.zdekoduj plik json",
-            "6.zakoncz"
+            "6.zakoncz",
         ]
 
-        cipher_menu = [
-            "1.rot13",
-            "2.rot47"
-                       ]
+        cipher_menu = ["1.rot13", "2.rot47"]
 
         algorytm_rot13 = "ROT13"
         algorytm_rot47 = "ROT47"
@@ -56,13 +52,14 @@ class Menu:
                     wybor_algo = self.wybierz()
                     match wybor_algo:
                         case "1":
-
-                            encrypted = self.fasade.encrypt(self.podaj_tekst(),
-                                                            algorytm_rot13)
+                            encrypted = self.fasade.encrypt(
+                                self.podaj_tekst(), algorytm_rot13
+                            )
                             print(encrypted)
                         case "2":
-                            encrypted = self.fasade.encrypt(self.podaj_tekst(),
-                                                            algorytm_rot47)
+                            encrypted = self.fasade.encrypt(
+                                self.podaj_tekst(), algorytm_rot47
+                            )
                             print(encrypted)
                         case _:
                             error = InvalidMenuChoice(wybor_algo)
@@ -73,12 +70,14 @@ class Menu:
                     wybor_algo = self.wybierz()
                     match wybor_algo:
                         case "1":
-                            decrypted = self.fasade.decrypt(self.podaj_tekst(),
-                                                            algorytm_rot13)
+                            decrypted = self.fasade.decrypt(
+                                self.podaj_tekst(), algorytm_rot13
+                            )
                             print(decrypted)
                         case "2":
-                            decrypted = self.fasade.decrypt(self.podaj_tekst(),
-                                                            algorytm_rot47)
+                            decrypted = self.fasade.decrypt(
+                                self.podaj_tekst(), algorytm_rot47
+                            )
                             print(decrypted)
                         case _:
                             error = InvalidMenuChoice(wybor_algo)
@@ -93,8 +92,11 @@ class Menu:
                     try:
                         encrypted = self.fasade.odkoduj_z_pliku()
                         print(encrypted)
-                    except (InvalidCipherTextError, FileOperationError,
-                            FileNotExistError) as e:
+                    except (
+                        InvalidCipherTextError,
+                        FileOperationError,
+                        FileNotExistError,
+                    ) as e:
                         logger.error(e)
 
                 case "6":
@@ -103,8 +105,7 @@ class Menu:
                     error = InvalidMenuChoice(wybor)
                     logger.error(error)
 
-
-    def podaj_tekst(self)-> str:
+    def podaj_tekst(self) -> str:
         """
         Prompts user to input text.
 
@@ -114,7 +115,7 @@ class Menu:
         tekst = input("podaj tekst: ")
         return tekst
 
-    def wybierz(self)-> str:
+    def wybierz(self) -> str:
         """
         Prompts user to select an action.
 
@@ -125,10 +126,6 @@ class Menu:
         return wybor
 
 
-
 if __name__ == "__main__":
     elo = Menu()
     elo.show_menu()
-
-
-

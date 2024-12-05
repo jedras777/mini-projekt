@@ -10,6 +10,7 @@ def test_encrypt_method():
     assert klasa.encrypt("HELLO") == "URYYB"
     assert klasa.encrypt("Python123") == "Clguba123"
 
+
 def test_decrypt_method():
     """
     Test ROT13 decrypt method with various input scenarios.
@@ -18,6 +19,7 @@ def test_decrypt_method():
     assert klasa.decrypt("hello") == "uryyb"
     assert klasa.decrypt("HELLO") == "URYYB"
     assert klasa.decrypt("Python123") == "Clguba123"
+
 
 def test_symmetry():
     """
@@ -28,6 +30,7 @@ def test_symmetry():
     encrypted = klasa.encrypt(decrypted)
     assert encrypted == "elo"
 
+
 def test_empty_string():
     """
     Test ROT13 behavior with empty string input.
@@ -35,6 +38,7 @@ def test_empty_string():
     klasa = ROT13Cipher()
     assert klasa.encrypt("") == ""
     assert klasa.decrypt("") == ""
+
 
 def test_non_alpha_characters():
     """
@@ -44,6 +48,7 @@ def test_non_alpha_characters():
     text = r"1234!@#$%^&*()_+[]{};':\",./<>?"
     assert cipher.encrypt(text) == text
     assert cipher.decrypt(text) == text
+
 
 def test_large_input():
     """
@@ -55,6 +60,7 @@ def test_large_input():
     decrypted = klasa.decrypt(encrypted)
     assert decrypted == text
 
+
 def test_non_latin_characters():
     """
     Test ROT13 with Polish characters.
@@ -64,6 +70,7 @@ def test_non_latin_characters():
     encrypted = klasa.encrypt(text)
     decrypted = klasa.decrypt(encrypted)
     assert decrypted == text
+
 
 def test_encrypting_encrypted_text():
     """

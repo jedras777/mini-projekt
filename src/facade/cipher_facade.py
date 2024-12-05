@@ -1,10 +1,9 @@
-
-from src.ciphers.rot13_cipher import ROT13Cipher
-from src.ciphers.rot47_cypher import ROT47Cipher
-from src.exceptions.cipher_exceptions import InvalidCipherTextError
-from src.file_handlers.json_handler import Plik
-from src.history.history_memory import HistoryOfCodingDecoding
-from src.settings.settings import Settings
+from ciphers.rot13_cipher import ROT13Cipher
+from ciphers.rot47_cypher import ROT47Cipher
+from exceptions.cipher_exceptions import InvalidCipherTextError
+from file_handlers.json_handler import Plik
+from history.history_memory import HistoryOfCodingDecoding
+from settings.settings import Settings
 
 
 class CipherFacade:
@@ -19,13 +18,14 @@ class CipherFacade:
         algorytm_rot_47 (ROT47Cipher): Instance of ROT47 cipher algorithm.
         plik (Plik): File handler for JSON operations.
     """
-    def __init__(self)-> None:
+
+    def __init__(self) -> None:
         self.historia = HistoryOfCodingDecoding()
         self.algorytm_rot_13 = ROT13Cipher()
         self.algorytm_rot_47 = ROT47Cipher()
         self.plik = Plik()
 
-    def encrypt(self, tekst: str, algorytm: str)-> str:
+    def encrypt(self, tekst: str, algorytm: str) -> str:
         """
         Encrypts the given text using the specified cipher algorithm.
 
@@ -46,28 +46,30 @@ class CipherFacade:
         else:
             raise InvalidCipherTextError(algorytm)
 
-        format_do_zapisu: tuple[str, str, str] = (encrypted_tekst,
-                                                  algorytm,
-                                                  self.historia.dodaj_czas())
+        format_do_zapisu: tuple[str, str, str] = (
+            encrypted_tekst,
+            algorytm,
+            self.historia.dodaj_czas(),
+        )
         self.historia.dodaj(self.plik.json_maker(format_do_zapisu))
         self.dodaj_zdanie_do_pliku(encrypted_tekst)
 
         return encrypted_tekst
 
-    def decrypt(self, tekst: str, algorytm: str)-> str:
+    def decrypt(self, tekst: str, algorytm: str) -> str:
         """
-       Decrypts the given text using the specified cipher algorithm.
+        Decrypts the given text using the specified cipher algorithm.
 
-       Args:
-           tekst (str): The text to be decrypted.
-           algorytm (str): The cipher algorithm to use ('ROT13' or 'ROT47').
+        Args:
+            tekst (str): The text to be decrypted.
+            algorytm (str): The cipher algorithm to use ('ROT13' or 'ROT47').
 
-       Returns:
-           str: The decrypted text.
+        Returns:
+            str: The decrypted text.
 
-       Raises:
-           InvalidCipherTextError: If an unsupported cipher algorithm is specified.
-       """
+        Raises:
+            InvalidCipherTextError: If an unsupported cipher algorithm is specified.
+        """
         if algorytm == "ROT13":
             decrypted_tekst = self.algorytm_rot_13.decrypt(tekst)
         elif algorytm == "ROT47":
@@ -75,25 +77,27 @@ class CipherFacade:
         else:
             raise InvalidCipherTextError(algorytm)
 
-        format_do_zapisu: tuple[str, str, str] = (decrypted_tekst,
-                                                  algorytm,
-                                                  self.historia.dodaj_czas())
+        format_do_zapisu: tuple[str, str, str] = (
+            decrypted_tekst,
+            algorytm,
+            self.historia.dodaj_czas(),
+        )
         self.historia.dodaj(self.plik.json_maker(format_do_zapisu))
         self.dodaj_zdanie_do_pliku(decrypted_tekst)
 
         return decrypted_tekst
 
-    def dodaj_zdanie_do_pliku(self, zdanie: str)-> None:
+    def dodaj_zdanie_do_pliku(self, zdanie: str) -> None:
         """
-         Writes the given text to a file specified in Settings.
+        Writes the given text to a file specified in Settings.
 
-         Args:
-             zdanie (str): The text to be written to the file.
-         """
+        Args:
+            zdanie (str): The text to be written to the file.
+        """
         with open(Settings.save_path, "w", encoding="utf-8") as plik:
             plik.write(zdanie)
 
-    def odkoduj_z_pliku(self)-> str:
+    def odkoduj_z_pliku(self) -> str:
         """
         Decodes text from a JSON file using the stored algorithm.
 
@@ -124,4 +128,3 @@ class CipherFacade:
 
             case _:
                 raise InvalidCipherTextError(algorytm)
-
