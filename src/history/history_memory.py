@@ -42,7 +42,8 @@ class HistoryOfCodingDecoding:
             liczba += 1
             self.history[liczba] = obiekt
 
-    def pokaz_historie(self) -> None:
+
+    def pokaz_historie(self)-> str:
         """
         Displays the entire operation history.
 
@@ -50,19 +51,29 @@ class HistoryOfCodingDecoding:
             Optional[str]: Formatted history string or None if empty.
         """
         if not self.history:
-            print("historia jest pusta")
+            return "historia jest pusta"
         else:
+            tekst = ""
             for x, i in self.history.items():
-                print(f"{x}=> {i}")
+                tekst += f"{x}=> {i}\n"
+            return tekst
 
-    def zapisz_historie(self, sciezka: str) -> None:
+
+    def zapisz_historie(self, sciezka: str)-> str:
         """
         Writes the history to a file.
 
         Args:
             sciezka (str): File path to save history.
         """
-        with open(sciezka, "w", encoding="utf-8") as plik:
-            for x, i in self.history.items():
-                plik.write((str(x) + "=>" + str(i) + "\n"))
-        plik.close()
+        if not self.history:
+            return "historia jest pusta zakoduj cos"
+        else:
+            with open(sciezka, "w", encoding="utf-8") as plik:
+                for x, i in self.history.items():
+                    plik.write((str(x) + "=>" + str(i) + "\n"))
+            plik.close()
+            return "historia została zapisana poprawnie"
+
+
+
