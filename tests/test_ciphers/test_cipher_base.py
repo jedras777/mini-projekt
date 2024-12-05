@@ -58,16 +58,3 @@ def test_abstract_method():
     """
     with pytest.raises(TypeError):
         _ = BaseCipher()
-
-
-# pytanie na zajęcia jak przetestowac pass
-# class ConcreteClass(BaseCipher):
-#     def encrypt(self, text: str)-> str:
-#         return text + text
-#     def decrypt(self, text: str) -> str:
-#         return text + text
-#
-#
-# def test_elo():
-#     obj = ConcreteClass().encrypt("elo")
-#     assert obj == "eloelo"

@@ -26,7 +26,7 @@ class BaseCipher(ABC):
         Raises:
             NotImplementedError: If the method is not implemented by subclass.
         """
-        pass
+        ...
 
     @abstractmethod
     def decrypt(self, text: str) -> str:
@@ -42,4 +42,4 @@ class BaseCipher(ABC):
         Raises:
             NotImplementedError: If the method is not implemented by subclass.
         """
-        pass
+        ...
