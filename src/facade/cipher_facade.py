@@ -19,8 +19,9 @@ class CipherFacade:
         plik (Plik): File handler for JSON operations.
     """
 
-    def __init__(self) -> None:
+    def __init__(self, db) -> None:
         self.historia = HistoryOfCodingDecoding()
+        self.db = db
         self.algorytm_rot_13 = ROT13Cipher()
         self.algorytm_rot_47 = ROT47Cipher()
         self.plik = Plik()
@@ -52,6 +53,9 @@ class CipherFacade:
             self.historia.dodaj_czas(),
         )
         self.historia.dodaj(self.plik.json_maker(format_do_zapisu))
+
+        self.db.insert_data(text=encrypted_tekst, algorithm=algorytm)
+
         self.dodaj_zdanie_do_pliku(encrypted_tekst)
 
         return encrypted_tekst
@@ -83,6 +87,8 @@ class CipherFacade:
             self.historia.dodaj_czas(),
         )
         self.historia.dodaj(self.plik.json_maker(format_do_zapisu))
+
+        self.db.insert_data(text=decrypted_tekst, algorithm=algorytm)
         self.dodaj_zdanie_do_pliku(decrypted_tekst)
 
         return decrypted_tekst
@@ -128,3 +134,8 @@ class CipherFacade:
 
             case _:
                 raise InvalidCipherTextError(algorytm)
+
+    def pokaz_historie(self)-> None:
+        historia_z_db = self.db.read_data()
+        for row in historia_z_db:
+            print(" | ".join([str(element) for element in row]))

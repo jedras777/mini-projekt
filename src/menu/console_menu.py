@@ -11,14 +11,16 @@ from tools.logger import logger
 
 
 class Menu:
-    def __init__(self) -> None:
+    def __init__(self, db) -> None:
         """
         A menu-driven interface for cipher operations.
 
         Attributes:
         fasade (CipherFacade): Facade for managing cipher operations.
         """
-        self.fasade = CipherFacade()
+        self.db = db
+        self.fasade = CipherFacade(db=self.db)
+
 
     def show_menu(self) -> None:
         """
@@ -83,8 +85,10 @@ class Menu:
                             error = InvalidMenuChoice(wybor_algo)
                             print(error)
                 case "3":
-                    historia = self.fasade.historia.pokaz_historie()
-                    print(historia)
+                    # historia = self.fasade.historia.pokaz_historie()
+                    # print(historia)
+                    self.fasade.pokaz_historie()
+
                 case "4":
                     dzialanie = self.fasade.historia.zapisz_historie(Settings.save_history_path)
                     print(dzialanie)

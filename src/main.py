@@ -1,9 +1,13 @@
+from database.database import DatabaseManager
 from menu.console_menu import Menu
 
 
 def main() -> None:
-    menu = Menu()
-    menu.show_menu()
+    with DatabaseManager('history.sqlite3') as db:
+
+
+        menu = Menu(db=db)
+        menu.show_menu()
 
 
 if __name__ == "__main__":

@@ -5,7 +5,6 @@ from customtkinter import *
 from src.facade.cipher_facade import *
 
 
-
 class Window:
     def __init__(self):
         self.root = CTk()
@@ -13,7 +12,8 @@ class Window:
         self.root.resizable(True, True)
         set_appearance_mode("dark")
         self.menu_glowne()
-        self.facade = CipherFacade()
+
+
 
     def mainloop(self):
         self.root.mainloop()
